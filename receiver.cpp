@@ -18,10 +18,13 @@ int main(int argc, char const *argv[]) {
   std::string port, file;
   char *message = "Hola este es el servidor";
 
-  if (argc < 3 || argc > 4) {
+  if (argc < 2 || argc > 4) {
         std::cerr << "[ERROR] incorrect arguments.";
         std::cerr << "usage: receiver -f <file> <port>\n";
         exit(1);
+    } else if (argc == 2) {
+        port = argv[1];
+        std::cout << " port: " << port << std::endl;
     }  else if (argc == 4) { //&& argv[1] == "-f") {
         file = argv[2];
         port = argv[3];
