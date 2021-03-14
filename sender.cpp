@@ -13,6 +13,8 @@ int main(int argc, char const *argv[]) {
         exit(1);
     }
 
+    std::cout << argv[1] << std::endl;
+
   if (argc == 5 && argv[1] == "-f") {
     host = argv[3];
     file = argv[2];
