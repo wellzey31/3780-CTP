@@ -7,6 +7,7 @@
 int main(int argc, char const *argv[]) {
 
   if (argc < 3 || argc > 4) {
+        std::cerr << "[ERROR] incorrect arguments."
         std::cerr << "usage: receiver -f <file> <port>\n";
         exit(1);
     }

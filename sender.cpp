@@ -9,6 +9,7 @@ int main(int argc, char const *argv[]) {
   std::string host, port, file;
 
   if (argc < 3 || argc > 5) {
+        std::cerr << "[ERROR] incorrect arguments."
         std::cerr << "usage: sender -f <file> <ip> <port>\n";
         exit(1);
     }
