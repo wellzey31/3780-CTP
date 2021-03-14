@@ -6,7 +6,7 @@
   char sa_data[14];            // 14 bytes of protocol address
 }; */
 
-struct addrinfo {
+/*struct addrinfo {
   int ai_flags;                 //AI_PASSIVe, AI_CANONNAME, etc
   int ai_family;                //AF_INET,
   int ai_socktype;              //SOCK_STREAM, SOCK_DGRAM
@@ -16,7 +16,7 @@ struct addrinfo {
   char *ai_canonname;           //full canonical hostname
 
   struct addrinfo *ai_next;     //linked list
-};
+};*/
 
 // Internet address
 /* struct in_addr {
