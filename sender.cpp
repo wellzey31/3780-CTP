@@ -55,6 +55,7 @@ int main(int argc, char const *argv[]) {
   }
 
   send(s, msg, strlen(msg), 0);
+  std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
 
