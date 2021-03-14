@@ -1,37 +1,35 @@
 #include <stdio.h>
-#include <sys/socket.h>
 #include <sys/types.h>
+#include <sys/socket.h>
 #include <netdb.h>
+#include <arpa/inet.h>
 #include <string.h>
-#include "header.h"
 #include <iostream>
-#define PORT 8080
+#include <cstring>
 
 int main(int argc, char const *argv[]) {
+  int s;
+
+  struct sockaddr_in sa;
+  struct addrinfo hints, *res;
+  std::string port, file;
 
   if (argc < 3 || argc > 4) {
         std::cerr << "[ERROR] incorrect arguments.";
         std::cerr << "usage: receiver -f <file> <port>\n";
         exit(1);
     }  else if (argc == 5) { //&& argv[1] == "-f") {
-        host = argv[3];
         file = argv[2];
-        port = argv[4];
-        std::cout << "host: " << host << " port: " << port << " file: " << file << std::endl;
+        port = argv[3];
+        std::cout << " port: " << port << " file: " << file << std::endl;
     }
-
-    int s;
-
-    struct sockaddr_in sa;
-    struct addrinfo hints, *res;
-    std::string host, port, file;
 
     memset(&hints, 0, sizeof hints); //makes sure the struct is empty
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
 
-    getaddrinfo(host.c_str(), port.c_str(), &hints, &res);
+    getaddrinfo(port.c_str(), &hints, &res);
 
     s = socket(res -> ai_family, res -> ai_socktype, res -> ai_protocol);
 

@@ -6,11 +6,10 @@
 #include <string.h>
 #include <iostream>
 #include <cstring>
-#define PORT 8080
 
 int main(int argc, char const *argv[]) {
   int s;
-  
+
   struct sockaddr_in sa;
   struct addrinfo hints, *res;
   std::string host, port, file;
