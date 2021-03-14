@@ -1,5 +1,5 @@
 #include <stdio.h>
-//#include <sys/socket.h>
+#include <winsock2.h>
 #include <string.h>
 #include <iostream>
 #define PORT 8080
@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
 
     std::cout << argv[1] << std::endl;
 
-  if (argc == 5 && argv[1] == "-f") {
+  if (argc == 5) { //&& argv[1] == "-f") {
     host = argv[3];
     file = argv[2];
     port = argv[4];
