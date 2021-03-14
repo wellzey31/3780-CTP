@@ -7,7 +7,7 @@
 int main(int argc, char const *argv[]) {
 
   if (argc < 3 || argc > 5) {
-        printf("usage: sender -f <file> <ip> <port>\n");
+        std::cerr << "usage: sender -f <file> <ip> <port>\n";
         exit(1);
     }
 
