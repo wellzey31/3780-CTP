@@ -5,10 +5,16 @@ PROJECT = 3780-CTP
 CXX=g++
 CXXVERSION= -std=c++11
 
-all: reciever sender
+BINARIES = receiver sender
 
-reciever: receiver.cpp
+all: $(BINARIES)
+
+receiver: receiver.cpp
 	$(CXX) $(CXXFLAGS) -o receiver receiver.cpp
 
 sender: sender.cpp
 	$(CXX) $(CXXFLAGS) -o sender sender.cpp
+
+.PHONY: clean
+clean:
+		rm -f *.o $(BINARIES)
