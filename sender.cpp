@@ -12,10 +12,10 @@ int main(int argc, char const *argv[]) {
   int s, sread;
 
   struct sockaddr_in sa;
-  std::string host, port, file, msg;
+  std::string host, port, file;
   char msgin[1024] = {0};
 
-  msg = "hello";
+  char *msg = "hello";
 
   s = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -36,13 +36,13 @@ int main(int argc, char const *argv[]) {
     std::cout << "host: " << host << " port: " << port << " file: " << file << std::endl;
   }
 
-  if(inet_pton(AF_INET, host.c_str(), &(sa.sin_addr)) <=0 )
+  if (inet_pton(AF_INET, host.c_str(), &(sa.sin_addr)) <=0 )
   {
     std::cerr << "[ERROR] Invalid address" << std::endl;
     exit(1);
   }
 
-  if(connect(s, (struct sockaddr *)&sa, sizeof(sa)) < 0)
+  if (connect(s, (struct sockaddr *)&sa, sizeof(sa)) < 0)
   {
     std::cerr << "[ERROR] Connection failled";
     exit(1);
