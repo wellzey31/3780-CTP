@@ -6,8 +6,8 @@
 
 int main(int argc, char const *argv[]) {
 
-  if (argc < 3 || argc > 5) {
-        printf("usage: sender -f <file> <ip> <port>\n");
+  if (argc < 2 || argc > 4) {
+        printf("usage: receiver -f <file> <port>\n");
         exit(1);
     }
 
