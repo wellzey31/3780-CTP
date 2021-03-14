@@ -53,6 +53,10 @@ int main(int argc, char const *argv[]) {
     std::cerr << "[ERROR] Connection failled";
     exit(1);
   }
+
+  std::cout << "What message would you like to send? ";
+  std::cin >> msg;
+
   send(s, msg.c_str(), strlen(msg.c_str()), 0);
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
