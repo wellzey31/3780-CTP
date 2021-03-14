@@ -19,15 +19,15 @@ struct addrinfo {
 };
 
 // Internet address
-struct in_addr {
+/* struct in_addr {
   uint32_t s_addr;             //32-bit int
-};
+}; */
 
-struct sockaddr_in {
+/* struct sockaddr_in {
   short int sin_family;         //Address family, AF_INET
   unsigned short int sin_port;  //Port number
   struct in_addr sin_addr;      //Internet address
   unsigned char sin_zero[8];    //Same size as struct sockadd
-};
+}; */
 
 #endif //HEADER_H
