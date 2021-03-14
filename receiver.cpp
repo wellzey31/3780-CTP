@@ -8,45 +8,61 @@
 #include <cstring>
 
 int main(int argc, char const *argv[]) {
-  int s;
+  int s, new_socket, valread;
 
   struct sockaddr_in sa;
-  struct addrinfo hints, *res;
+  int opt = 1;
+  int addrlen = sizeof(sa);
+  char buffer[1024] = {0};
   std::string port, file;
+  char *message = "Hola este es el servidor";
 
   if (argc < 3 || argc > 4) {
         std::cerr << "[ERROR] incorrect arguments.";
         std::cerr << "usage: receiver -f <file> <port>\n";
         exit(1);
-    }  else if (argc == 5) { //&& argv[1] == "-f") {
+    }  else if (argc == 4) { //&& argv[1] == "-f") {
         file = argv[2];
         port = argv[3];
         std::cout << " port: " << port << " file: " << file << std::endl;
     }
 
-    memset(&hints, 0, sizeof hints); //makes sure the struct is empty
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
-
-    getaddrinfo(port.c_str(), &hints, &res);
-
-    s = socket(res -> ai_family, res -> ai_socktype, res -> ai_protocol);
-
-    if(s == -1) {
-      std::cerr << "[ERROR] socket = -1.\n";
-      exit(1);
+    if ((s = socket(AF_INET, SOCK_STREAM, 0)) == )) {
+      std::cerr >> "Socket failed" << std::endl;
+      exit(EXIT_FAILURE);
     }
 
-    std::cout << argv[1] << std::endl;
-
-    inet_pton(AF_INET, host.c_str(), &(sa.sin_addr));
-
-    std::cout << "argc: " << argc << std::endl;
-
-    for (int i = 0; i < argc; i++) {
-      std::cout << argv[i] << std::endl;
+    if (setsockopt(s, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+      std::cerr << "setsockopt" << std::endl;
+      exit(EXIT_FAILURE);
     }
+
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons( PORT );
+
+    // Forcefully attaching socket to the port 8080
+    if (bind(s, (struct sockaddr *)&sa,
+                                 sizeof(sa))<0)
+    {
+        perror("bind failed");
+        exit(EXIT_FAILURE);
+    }
+    if (listen(s, 3) < 0)
+    {
+        perror("listen");
+        exit(EXIT_FAILURE);
+    }
+    if ((new_socket = accept(s, (struct sockaddr *)&sa,
+                       (socklen_t*)&addrlen))<0)
+    {
+        perror("accept");
+        exit(EXIT_FAILURE);
+    }
+    valread = read( new_socket , buffer, 1024);
+    printf("%s\n",buffer );
+    send(new_socket , hello , strlen(hello) , 0 );
+    printf("Mensaje de servidor enviado\n");
 
  return 0;
 }
