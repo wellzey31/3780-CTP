@@ -8,10 +8,17 @@
 
 int main(int argc, char const *argv[]) {
 
+  struct sockaddr_in sa;
+  struct addrinfo hints;
   std::string host, port, file;
 
+  memset(&hints, 0, sizeof hints); //makes sure the struct is empty
+  hints.ai_family = AF_INET;
+  hints.ai_socktype = SOCK_STREAM;
+  hints.ai_flags = AI_PASSIVE;
+
   if (argc < 3 || argc > 5) {
-        std::cerr << "[ERROR] incorrect arguments."
+        std::cerr << "[ERROR] incorrect arguments.";
         std::cerr << "usage: sender -f <file> <ip> <port>\n";
         exit(1);
     }
