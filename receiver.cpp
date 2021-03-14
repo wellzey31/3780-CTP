@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <sys/socket.h>
+#include <sys/types.h>
+#include <netdb.h>
 #include <string.h>
 #include "header.h"
 #include <iostream>
@@ -13,11 +15,7 @@ int main(int argc, char const *argv[]) {
         exit(1);
     }
 
-  std::cout << "argc: " << argc << std::endl;
-
-  for (int i = 0; i < argc; i++) {
-    std::cout << argv[i] << std::endl;//hello
-  }
+  
 
  return 0;
 }

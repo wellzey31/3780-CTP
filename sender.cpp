@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]) {
   s = socket(res -> ai_family, res -> ai_socktype, res -> ai_protocol);
 
   if(s == -1) {
-    std::cerr << "[ERROR] socket = -1.";
+    std::cerr << "[ERROR] socket = -1.\n";
     exit(1);
   }
 
