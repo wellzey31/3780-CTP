@@ -13,6 +13,7 @@ int main(int argc, char const *argv[]) {
 
   struct sockaddr_in sa;
   std::string host, port, file;
+  short unsigned int p;
   char msgin[1024] = {0};
 
   char *msg = "hello";
@@ -33,8 +34,13 @@ int main(int argc, char const *argv[]) {
     host = argv[3];
     file = argv[2];
     port = argv[4];
+    p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << " file: " << file << std::endl;
   }
+
+  sa.sin_family = AF_INET;
+	sa.sin_port = htons(p);
+
 
   if (inet_pton(AF_INET, host.c_str(), &(sa.sin_addr)) <=0 )
   {
@@ -48,7 +54,7 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
-  send(s, msg.c_str(), strlen(msg.c_str()), 0);
+  send(s, msg, strlen(msg), 0);
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
 

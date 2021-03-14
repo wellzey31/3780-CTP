@@ -33,7 +33,7 @@ int main(int argc, char const *argv[]) {
       exit(EXIT_FAILURE);
     }
 
-    if (setsockopt(s, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+    if (setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
       std::cerr << "setsockopt" << std::endl;
       exit(EXIT_FAILURE);
     }
