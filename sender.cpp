@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <sys/socket.h>
 #include <string.h>
-#include "header.h"
 #include <iostream>
+#include <cstring>
 #define PORT 8080
 
 int main(int argc, char const *argv[]) {
@@ -10,7 +10,7 @@ int main(int argc, char const *argv[]) {
   std::string host, port, file;
 
   if (argc < 3 || argc > 5) {
-        std::cerr << "[ERROR] incorrect arguments.";
+        std::cerr << "[ERROR] incorrect arguments."
         std::cerr << "usage: sender -f <file> <ip> <port>\n";
         exit(1);
     }
@@ -23,6 +23,8 @@ int main(int argc, char const *argv[]) {
     port = argv[4];
     std::cout << "host: " << host << " port: " << port << " file: " << file << std::endl;
   }
+
+  inet_pton(AF_INET, host.c_str(), &(sa.sin_addr));
 
   std::cout << "argc: " << argc << std::endl;
 
