@@ -26,7 +26,7 @@ public:
   // returns the header value
   unsigned int getHeader() const;
 
-  std::bitset<32> buildHeader(unsigned int length, unsigned int sequence,
+  void buildHeader(unsigned int length, unsigned int sequence,
     unsigned int type, unsigned int window);
 
   // returns the size of the packet, including headers and data
