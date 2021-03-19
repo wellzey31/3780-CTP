@@ -25,28 +25,27 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
-  if (argc < 3 || argc > 5) {
-        std::cerr << "[ERROR] incorrect arguments." << std::endl;
-        std::cerr << "usage: sender -f <file> <ip> <port>\n";
-        exit(1);
-  }
-  else if (argc == 3) {
+  if (argc == 3) {
     host = argv[1];
     port = argv[2];
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << std::endl;
   }
-  else if (argc == 5) { //&& argv[1] == "-f") {
+  else if (argc == 5 && argv[1] == "-f")) { 
     host = argv[3];
     file = argv[2];
     port = argv[4];
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << " file: " << file << std::endl;
   }
+  else {
+        std::cerr << "[ERROR] incorrect arguments." << std::endl;
+        std::cerr << "usage: sender -f <file> <ip> <port>\n";
+        exit(1);
+  }
 
   sa.sin_family = AF_INET;
 	sa.sin_port = htons(p);
-
 
   if (inet_pton(AF_INET, host.c_str(), &(sa.sin_addr)) <=0 )
   {
