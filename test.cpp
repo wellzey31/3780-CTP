@@ -9,9 +9,9 @@ int main() {
 
   s.setHeader(16);
 
-  s.buildHeader(512, 256, 3, 31);
+  s.buildHeader(512, 255, 3, 31);
 
-  cout<< endl;
+  cout << endl;
 
   //cout << s.getHeader() << endl;
 
