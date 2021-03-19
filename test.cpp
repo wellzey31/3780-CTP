@@ -11,7 +11,9 @@ int main() {
 
   s.buildHeader(512, 256, 3, 31);
 
-  cout << s.getHeader() << endl;
+  cout<< endl;
+
+  //cout << s.getHeader() << endl;
 
 
   return 0;

@@ -15,7 +15,7 @@ unsigned int SimpleHeader::getHeader() const {
   return packet.lsb | (packet.msb<<8);
 }
 
-void buildHeader(unsigned int length, unsigned int sequence,
+void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   unsigned int type, unsigned int window)
   {
     std::bitset<32> header;
@@ -57,5 +57,5 @@ void buildHeader(unsigned int length, unsigned int sequence,
 
     std::cout << header;
 
-    
+
   }
