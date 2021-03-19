@@ -1,5 +1,6 @@
 *
 !*.cpp
+!*.cc
 !*Makefile
 !*.md
 !*.h
