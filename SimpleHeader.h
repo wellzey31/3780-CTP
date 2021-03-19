@@ -25,8 +25,8 @@ public:
   // returns the header value
   unsigned int getHeader() const;
 
-  unsigned int buildHeader(unsigned int size, unsigned int sequence,
-    unsigned int type, unsigned int window, unsigned int window,);
+  unsigned int buildHeader(unsigned int length, unsigned int sequence,
+    unsigned int type, unsigned int window);
 
   // returns the size of the packet, including headers and data
   // to be used with recvfrom() or sendto()
