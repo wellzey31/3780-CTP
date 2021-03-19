@@ -16,7 +16,7 @@ int main(int argc, char const *argv[]) {
   short unsigned int p;
   char msgin[1024] = {0};
 
-  char *msg = "hello";
+  std::string msg;
 
   s = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -29,6 +29,12 @@ int main(int argc, char const *argv[]) {
         std::cerr << "[ERROR] incorrect arguments." << std::endl;
         std::cerr << "usage: sender -f <file> <ip> <port>\n";
         exit(1);
+  }
+  else if (argc == 3) {
+    host = argv[1];
+    port = argv[2];
+    p = std::stoi(port);
+    std::cout << "host: " << host << " port: " << port << std::endl;
   }
   else if (argc == 5) { //&& argv[1] == "-f") {
     host = argv[3];
@@ -54,7 +60,10 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
-  send(s, msg, strlen(msg), 0);
+  std::cout << "What would you like to say. " << std::endl;
+  std::getline(std::cin, msg);
+
+  send(s, msg.c_str(), strlen(msg.c_str()), 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
