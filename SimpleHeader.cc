@@ -1,5 +1,6 @@
 #include "SimpleHeader.h"
 #include <bitset>
+#include <iostream>
 
 SimpleHeader::SimpleHeader() {
   packet.msb = packet.lsb = 0;
@@ -14,7 +15,7 @@ unsigned int SimpleHeader::getHeader() const {
   return packet.lsb | (packet.msb<<8);
 }
 
-unsigned int buildHeader(unsigned int length, unsigned int sequence,
+std::bitset<32> buildHeader(unsigned int length, unsigned int sequence,
   unsigned int type, unsigned int window)
   {
     std::bitset<32> header;
@@ -54,7 +55,7 @@ unsigned int buildHeader(unsigned int length, unsigned int sequence,
       }
     }
 
-    std::cout << header << std::endl;
+    std::cout << header;
 
     return header;
   }

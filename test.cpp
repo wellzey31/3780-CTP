@@ -1,5 +1,6 @@
 #include "SimpleHeader.h"
 #include <iostream>
+#include <bitset>
 
 using namespace std;
 
