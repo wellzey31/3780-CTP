@@ -65,13 +65,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
       }
     }
 
-<<<<<<< HEAD
     unsigned long longhead = header.to_ulong();
     unsigned int headint = (int) longhead;
     setHeader(headint);
-=======
-    std::cout << "header: " << header << "\n";
-
-
->>>>>>> 00a05e5104c22f83d46a1e970a304af53fc6eb19
   }
