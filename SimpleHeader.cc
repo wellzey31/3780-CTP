@@ -65,11 +65,26 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   }
 
   unsigned int SimpleHeader::getType() {
-    std::bitset<32>
+    return (unsigned int) packet.type.to_ulong();
   }
-  unsigned int SimpleHeader::getTR();
-  unsigned int SimpleHeader::getWindow();
-  unsigned int SimpleHeader::getSeqNum();
-  unsigned int SimpleHeader::getLength();
-  unsigned int SimpleHeader::getTimestamp();
-  unsigned int SimpleHeader::getCRC();
+  unsigned int SimpleHeader::getTR() {
+    return (unsigned int) packet.tr.to_ulong();
+  }
+  unsigned int SimpleHeader::getWindow() {
+    return (unsigned int) packet.window.to_ulong();
+  }
+  unsigned int SimpleHeader::getSeqNum() {
+    return (unsigned int) packet.seqnum.to_ulong();
+  }
+  unsigned int SimpleHeader::getLength() {
+    return (unsigned int) packet.length.to_ulong();
+  }
+  unsigned int SimpleHeader::getTimestamp() {
+    return (unsigned int) packet.timestamp.to_ulong();
+  }
+  unsigned int SimpleHeader::getCRC1() {
+    return (unsigned int) packet.crc1.to_ulong();
+  }
+  unsigned int SimpleHeader::getCRC2() {
+    return (unsigned int) packet.crc2.to_ulong();
+  }
