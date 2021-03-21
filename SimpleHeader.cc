@@ -3,12 +3,11 @@
 #include <iostream>
 
 SimpleHeader::SimpleHeader() {
-  packet.msb = packet.lsb = 0;
 }
 
 void SimpleHeader::setHeader(unsigned int val) {
-  packet.msb = (val>>8); // shift the integer to right by 8 bits to get the msb
-  packet.lsb = (val&255); // bitwise AND with 8 LSB bits set to 1.
+  std::bitset<32> temp(val);
+  packet.header = temp;
 }
 
 unsigned int SimpleHeader::getHeader() const {
@@ -69,3 +68,13 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     unsigned int headint = (int) longhead;
     setHeader(headint);
   }
+
+  unsigned int SimpleHeader::getType() {
+    std::bitset<32>
+  }
+  unsigned int SimpleHeader::getTR();
+  unsigned int SimpleHeader::getWindow();
+  unsigned int SimpleHeader::getSeqNum();
+  unsigned int SimpleHeader::getLength();
+  unsigned int SimpleHeader::getTimestamp();
+  unsigned int SimpleHeader::getCRC();

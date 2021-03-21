@@ -6,8 +6,9 @@
 #define DATA_SZ 256
 
 struct simplepacket {
-  uint8_t msb;
-  uint8_t lsb;  // Most significant byte first = Network order
+  std::bitset<32> header;
+  std::bitset<32> timestamp;
+  std::bitset<32> crc1;
   char data[DATA_SZ];  // payload
 };
 
@@ -28,6 +29,16 @@ public:
 
   void buildHeader(unsigned int length, unsigned int sequence,
     unsigned int type, unsigned int window);
+
+  //getters to return values as int for each header field
+  unsigned int getType();
+  unsigned int getTR();
+  unsigned int getWindow();
+  unsigned int getSeqNum();
+  unsigned int getLength();
+  unsigned int getTimestamp();
+  unsigned int getCRC();
+
 
   // returns the size of the packet, including headers and data
   // to be used with recvfrom() or sendto()
