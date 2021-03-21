@@ -39,7 +39,8 @@ public:
   unsigned int getSeqNum();
   unsigned int getLength();
   unsigned int getTimestamp();
-  unsigned int getCRC();
+  unsigned int getCRC1();
+  unsigned int getCRC2();
 
   //setters to return values as int for each header field
   void setType(unsigned int t);
