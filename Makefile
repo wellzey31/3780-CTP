@@ -15,10 +15,10 @@ testSH: $(OBJS)
 
 all: $(BINARIES)
 
-receiver: receiver.cpp SimpleHeader.h
+receiver: receiver.cpp $(OBJS)
 	$(CXX) $(CXXFLAGS) -o receiver receiver.cpp
 
-sender: sender.cpp SimpleHeader.h
+sender: sender.cpp $(OBJS)
 	$(CXX) $(CXXFLAGS) -o sender sender.cpp
 
 .PHONY: clean
