@@ -26,4 +26,4 @@ clean:
 		rm -f *.o $(BINARIES) *~ *.d
 
 ## include the generate dependency files
--include $(addsuffix .d,$(basename $(OBJS)))
+-include $(addsuffix .d, $(basename $(OBJS)))
