@@ -6,9 +6,14 @@
 #define DATA_SZ 256
 
 struct simplepacket {
-  std::bitset<32> header;
+  std::bitset<2> type;
+  std::bitset<1> tr;
+  std::bitset<5> window;
+  std::bitset<8> seqnum;
+  std::bitset<16> length;
   std::bitset<32> timestamp;
   std::bitset<32> crc1;
+  std::bitset<32> crc2;
   char data[DATA_SZ];  // payload
 };
 
@@ -20,9 +25,6 @@ private:
 public:
   // default constructor initializes the header to zero.
   SimpleHeader();
-
-  // sets the 16 bit value of the header
-  void setHeader(unsigned int val);
 
   // returns the header value
   unsigned int getHeader() const;
@@ -38,6 +40,16 @@ public:
   unsigned int getLength();
   unsigned int getTimestamp();
   unsigned int getCRC();
+
+  //setters to return values as int for each header field
+  void setType();
+  void setTR();
+  void setWindow();
+  void setSeqNum();
+  void setLength();
+  void setTimestamp();
+  void setCRC1();
+  void setCRC2();
 
 
   // returns the size of the packet, including headers and data
