@@ -31,7 +31,7 @@ int main(int argc, char const *argv[]) {
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << std::endl;
   }
-  else if (argc == 5 && argv[1] == "-f")) { 
+  else if (argc == 5 && argv[1] == "-f") { 
     host = argv[3];
     file = argv[2];
     port = argv[4];
