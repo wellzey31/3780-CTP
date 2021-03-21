@@ -41,21 +41,37 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
       }
 
       std::bitset<8> bitSequence(sequence);
+
+      std::cout << "sequence: " << sequence << "\n";
+
+      std::cout << "bitSequence: " << bitSequence << "\n";
+
       for (int i = 0; i < 8; i++) {
-        if (bitWindow[i] == 1) {
+        if (bitSequence[i] == 1) {
           header.set(i+8);
         }
       }
 
       std::bitset<16> bitLength(length);
+
+      std::cout << "length: " << length << "\n";
+
+      std::cout << "bitLength: " << bitLength << "\n";
+
       for (int i = 0; i < 16; i++) {
-        if (bitWindow[i] == 1) {
+        if (bitLength[i] == 1) {
           header.set(i+16);
         }
       }
     }
 
+<<<<<<< HEAD
     unsigned long longhead = header.to_ulong();
     unsigned int headint = (int) longhead;
     setHeader(headint);
+=======
+    std::cout << "header: " << header << "\n";
+
+
+>>>>>>> 00a05e5104c22f83d46a1e970a304af53fc6eb19
   }
