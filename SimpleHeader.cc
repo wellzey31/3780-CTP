@@ -5,11 +5,6 @@
 SimpleHeader::SimpleHeader() {
 }
 
-void SimpleHeader::setHeader(unsigned int val) {
-  std::bitset<32> temp(val);
-  packet.header = temp;
-}
-
 unsigned int SimpleHeader::getHeader() const {
   return packet.lsb | (packet.msb<<8);
 }
