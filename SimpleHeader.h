@@ -42,11 +42,10 @@ public:
   unsigned int getCRC();
 
   //setters to return values as int for each header field
-  void setType();
-  void setTR();
-  void setWindow();
-  void setSeqNum();
-  void setLength();
+  void setType(unsigned int t);
+  void setWindow(unsigned int w);
+  void setSeqNum(unsigned int seqNum);
+  void setLength(unsigned int l);
   void setTimestamp();
   void setCRC1();
   void setCRC2();
