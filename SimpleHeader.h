@@ -66,8 +66,8 @@ public:
 
   // returns pointer to the structure holding the thePacket, including the headers
   // To be used with recvfrom or sendto
-  void * thePacket() {
-    return &packet;
+  simplepacket * thePacket() {
+    return packet;
   }
 
   void * thePayload() {
