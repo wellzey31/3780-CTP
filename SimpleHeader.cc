@@ -89,7 +89,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   }
 
   void SimpleHeader::setType(unsigned int type) {
-    packet.type.reset();
+    if (type != 0 ) packet.type.reset();
 
     switch (type) {
       case 1:

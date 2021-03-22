@@ -1,5 +1,6 @@
 #include "SimpleHeader.h"
 #include "gtest/gtest.h"  // google test framework
+#include <bitset>
 
 class HeaderTest : public testing::Test {
 protected:
@@ -14,10 +15,10 @@ protected:
   }
 };
 
-/*TEST_F(HeaderTest, setHeader) {
-  h_->setHeader(0x1234);
-  struct simplepacket * ptr = static_cast<struct simplepacket*> (h_->thePacket());
-  ASSERT_TRUE(ptr->msb == 0x12);
+TEST_F(HeaderTest, setHeader) {
+  h_->setType(3); //set to 3
+  h_->setType(0); //should ignore 0 and remain 3
+  ASSERT_TRUE(ptr->getType() == 3);
   ASSERT_TRUE(ptr->lsb == 0x34);
 
   //test buildHeader
@@ -30,4 +31,4 @@ TEST_F(HeaderTest, getHeader) {
   ptr->msb = 0x56;
   ptr->lsb = 0xa2;
   ASSERT_TRUE(h_->getHeader() == 0x56a2);
-}*/
+}
