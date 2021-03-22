@@ -4,8 +4,62 @@
 
 SimpleHeader::SimpleHeader() {}
 
-unsigned int SimpleHeader::getHeader() const {
-  return 1;
+unsigned long long SimpleHeader::getHeader() const {
+  std::bitset<128> temp;
+  int count = 0;
+  //add on type bits
+  for (int i = 0; i < 2; i++) {
+    if (packet.type[i] == 1) {
+      temp.set(count);
+      count++;
+    }
+  }
+  //add on tr bit
+  if (packet.tr[0] == 1) temp.set(2);
+  count++;
+  //add window bits to header
+  for (int i = 0; i < 5; i++) {
+    if (packet.window[i] == 1) {
+      temp.set(count);
+      count++;
+    }
+  }
+  //add seqnum bits to header
+  for (int i = 0; i < 8; i++) {
+    if (packet.seqnum[i] == 1) {
+      temp.set(count);
+      count++;
+    }
+  }
+  //add length bits to header
+  for (int i = 0; i < 16; i++) {
+    if (packet.length[i] == 1) {
+      temp.set(count);
+      count++;
+    }
+  }
+  //add timestamp bits to header
+  for (int i = 0; i < 32; i++) {
+    if (packet.timestamp[i] == 1) {
+      temp.set(count);
+      count++;
+    }
+  }
+  //add crc1 bits to header
+  for (int i = 0; i < 32; i++) {
+    if (packet.crc1[i] == 1) {
+      temp.set(count);
+      count++;
+    }
+  }
+  //add crc2 bits to header
+  for (int i = 0; i < 32; i++) {
+    if (packet.crc2[i] == 1) {
+      temp.set(count);
+      count++;
+    }
+  }
+  return temp.to_ullong();
 }
 
 void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
