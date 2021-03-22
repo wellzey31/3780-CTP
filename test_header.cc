@@ -16,12 +16,18 @@ protected:
 };
 
 TEST_F(HeaderTest, setHeader) {
+
+  //test type
   h_->setType(3); //set to 3
   h_->setType(0); //should ignore 0 and remain 3
   ASSERT_TRUE(ptr->getType() == 3);
-  ASSERT_TRUE(ptr->lsb == 0x34);
+  ASSERT_TRUE(ptr->type == std::bitset<2> b1(3));
 
-  //test buildHeader
+  //test window
+  h_->setWindow(3); //set to 3
+  ASSERT_TRUE(ptr->getWindow() == 3);
+  ASSERT_TRUE(ptr->type == std::bitset<5> b1(3));
+
 
 
 }

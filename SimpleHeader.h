@@ -44,6 +44,7 @@ public:
 
   //setters to return values as int for each header field
   void setType(unsigned int t);
+  void setTR(unsigned int t);
   void setWindow(unsigned int w);
   void setSeqNum(unsigned int seqNum);
   void setLength(unsigned int l);

@@ -102,6 +102,15 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     }
   }
 
+  void SimpleHeader::setTR(unsigned int tr) {
+    if (tr == 0 || tr == 1) {
+      packet.tr.reset();
+      if (tr == 1) packet.tr.set(0);
+    } else {
+      std::cerr << "Error with setTR" << std::endl;
+    }
+  }
+
   void SimpleHeader::setWindow(unsigned int w) {
     packet.window.reset();
 
