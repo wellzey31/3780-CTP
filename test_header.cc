@@ -14,7 +14,7 @@ protected:
   }
 };
 
-TEST_F(HeaderTest, setHeader) {
+/*TEST_F(HeaderTest, setHeader) {
   h_->setHeader(0x1234);
   struct simplepacket * ptr = static_cast<struct simplepacket*> (h_->thePacket());
   ASSERT_TRUE(ptr->msb == 0x12);
@@ -30,4 +30,4 @@ TEST_F(HeaderTest, getHeader) {
   ptr->msb = 0x56;
   ptr->lsb = 0xa2;
   ASSERT_TRUE(h_->getHeader() == 0x56a2);
-}
+}*/
