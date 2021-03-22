@@ -27,7 +27,7 @@ public:
   SimpleHeader();
 
   // returns the header value
-  unsigned int getHeader() const;
+  unsigned long long getHeader() const;
 
   void buildHeader(unsigned int length, unsigned int sequence,
     unsigned int type, unsigned int window);
@@ -48,9 +48,9 @@ public:
   void setWindow(unsigned int w);
   void setSeqNum(unsigned int seqNum);
   void setLength(unsigned int l);
-  void setTimestamp();
-  void setCRC1(unsigned int);
-  void setCRC2(unsigned int);
+  void setTimestamp(unsigned int num);
+  void setCRC1(unsigned int num);
+  void setCRC2(unsigned int num);
 
 
   // returns the size of the packet, including headers and data
