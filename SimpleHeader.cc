@@ -148,7 +148,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     packet.timestamp.reset();
     for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
-        pscket.timestamp.set(i);
+        packet.timestamp.set(i);
       }
     }
   }
