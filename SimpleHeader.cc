@@ -60,11 +60,9 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
 
     unsigned long longhead = header.to_ulong();
     unsigned int headint = (int) longhead;
-<<<<<<< HEAD
-=======
   }
 
-  void setType(unsigned int type) {
+  void SimpleHeader::setType(unsigned int type) {
     switch (type) {
       case 1:
         packet.type.set(0); //sets rightmost bit to 1
@@ -76,29 +74,52 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     }
   }
 
-  void setWindow(unsigned int w) {
+  void SimpleHeader::setWindow(unsigned int w) {
 
   }
 
-  void setSeqNum(unsigned int seqNum) {
+  void SimpleHeader::setSeqNum(unsigned int seqNum) {
 
   }
 
-  void setLength(unsigned int l) {
-
+  void SimpleHeader::setLength(unsigned int l) {
+    std::bitset<16> temp(num);
+    packet.length.reset();
+    for (int i = 0; i < 32; i++) {
+      if (temp[i] == 1) {
+        pscket.length.set(i);
+      }
+    }
   }
 
-  void setTimestamp() {
-
+  void SimpleHeader::setTimestamp() {
+    std::bitset<32> temp(num);
+    packet.timestamp.reset();
+    for (int i = 0; i < 32; i++) {
+      if (temp[i] == 1) {
+        pscket.timestamp.set(i);
+      }
+    }
   }
 
-  void setCRC1() {
-
+  void SimpleHeader::setCRC1(unsigned int num) {
+    std::bitset<32> temp(num);
+    packet.crc1.reset();
+    for (int i = 0; i < 32; i++) {
+      if (temp[i] == 1) {
+        pscket.crc1.set(i);
+      }
+    }
   }
 
-  void setCRC2() {
-
->>>>>>> 49034efc4be7319bdc83fd3aab112d85e52e1dc4
+  void SimpleHeader::setCRC2(unsigned int num) {
+    std::bitset<32> temp(num);
+    packet.crc2.reset();
+    for (int i = 0; i < 32; i++) {
+      if (temp[i] == 1) {
+        pscket.crc2.set(i);
+      }
+    }
   }
 
   unsigned int SimpleHeader::getType() {
