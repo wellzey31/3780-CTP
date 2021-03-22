@@ -11,8 +11,8 @@ std::bitset<128> SimpleHeader::getHeader() const {
   for (int i = 0; i < 2; i++) {
     if (packet.type[i] == 1) {
       temp.set(count);
-      count++;
     }
+    count++;
   }
   //add on tr bit
   if (packet.tr[0] == 1) temp.set(2);
@@ -21,43 +21,43 @@ std::bitset<128> SimpleHeader::getHeader() const {
   for (int i = 0; i < 5; i++) {
     if (packet.window[i] == 1) {
       temp.set(count);
-      count++;
     }
+    count++;
   }
   //add seqnum bits to header
   for (int i = 0; i < 8; i++) {
     if (packet.seqnum[i] == 1) {
       temp.set(count);
-      count++;
     }
+    count++;
   }
   //add length bits to header
   for (int i = 0; i < 16; i++) {
     if (packet.length[i] == 1) {
       temp.set(count);
-      count++;
     }
+    count++;
   }
   //add timestamp bits to header
   for (int i = 0; i < 32; i++) {
     if (packet.timestamp[i] == 1) {
       temp.set(count);
-      count++;
     }
+    count++;
   }
   //add crc1 bits to header
   for (int i = 0; i < 32; i++) {
     if (packet.crc1[i] == 1) {
       temp.set(count);
-      count++;
     }
+    count++;
   }
   //add crc2 bits to header
   for (int i = 0; i < 32; i++) {
     if (packet.crc2[i] == 1) {
       temp.set(count);
-      count++;
     }
+    count++;
   }
   std::cerr << "count: " << count << std::endl;
   return temp;
