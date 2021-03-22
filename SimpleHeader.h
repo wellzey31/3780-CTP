@@ -48,8 +48,8 @@ public:
   void setSeqNum(unsigned int seqNum);
   void setLength(unsigned int l);
   void setTimestamp();
-  void setCRC1();
-  void setCRC2();
+  void setCRC1(unsigned int);
+  void setCRC2(unsigned int);
 
 
   // returns the size of the packet, including headers and data
