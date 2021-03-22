@@ -2,8 +2,7 @@
 #include <bitset>
 #include <iostream>
 
-SimpleHeader::SimpleHeader() {
-}
+SimpleHeader::SimpleHeader() {}
 
 unsigned int SimpleHeader::getHeader() const {
   return 1;
@@ -61,6 +60,45 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
 
     unsigned long longhead = header.to_ulong();
     unsigned int headint = (int) longhead;
+<<<<<<< HEAD
+=======
+  }
+
+  void setType(unsigned int type) {
+    switch (type) {
+      case 1:
+        packet.type.set(0); //sets rightmost bit to 1
+      case 2:
+        packet.type.set(1); //sets second from right to 1
+      case 3:
+        packet.type.set(0);
+        packet.type.set(1);
+    }
+  }
+
+  void setWindow(unsigned int w) {
+
+  }
+
+  void setSeqNum(unsigned int seqNum) {
+
+  }
+
+  void setLength(unsigned int l) {
+
+  }
+
+  void setTimestamp() {
+
+  }
+
+  void setCRC1() {
+
+  }
+
+  void setCRC2() {
+
+>>>>>>> 49034efc4be7319bdc83fd3aab112d85e52e1dc4
   }
 
   unsigned int SimpleHeader::getType() {
