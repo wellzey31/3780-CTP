@@ -4,7 +4,7 @@
 
 SimpleHeader::SimpleHeader() {}
 
-unsigned long long SimpleHeader::getHeader() const {
+std::bitset<128> SimpleHeader::getHeader() const {
   std::bitset<128> temp;
   int count = 0;
   //add on type bits
@@ -59,7 +59,7 @@ unsigned long long SimpleHeader::getHeader() const {
       count++;
     }
   }
-  return temp.to_ullong();
+  return temp;
 }
 
 void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,

@@ -27,7 +27,7 @@ public:
   SimpleHeader();
 
   // returns the header value
-  unsigned int getHeader() const;
+  std::bitset<128> getHeader();
 
   void buildHeader(unsigned int length, unsigned int sequence,
     unsigned int type, unsigned int window);
