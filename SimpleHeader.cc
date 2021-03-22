@@ -73,17 +73,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
       //window passed in as a value from 0 to 31
       setWindow(window);
 
-      std::bitset<8> bitSequence(sequence);
-
-      std::cout << "sequence: " << sequence << "\n";
-
-      std::cout << "bitSequence: " << bitSequence << "\n";
-
-      for (int i = 0; i < 8; i++) {
-        if (bitSequence[i] == 1) {
-          header.set(i+8);
-        }
-      }
+      setSeqNum(sequence);
 
       std::bitset<16> bitLength(length);
 
@@ -96,10 +86,6 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
           header.set(i+16);
         }
       }
-    }
-
-    unsigned long longhead = header.to_ulong();
-    unsigned int headint = (int) longhead;
   }
 
   void SimpleHeader::setType(unsigned int type) {
@@ -128,27 +114,34 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   }
 
   void SimpleHeader::setSeqNum(unsigned int seqNum) {
+    packet.seqnum.reset();
 
+    std::bitset<8> bitSequence(seqNum);
+    for (int i = 0; i < 8; i++) {
+      if (bitSequence[i] == 1) {
+        packet.seqnum.set(i);
+      }
+    }
   }
 
   void SimpleHeader::setLength(unsigned int l) {
-    std::bitset<16> temp(num);
+    std::bitset<16> temp(l);
     packet.length.reset();
     for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
-        pscket.length.set(i);
+        packet.length.set(i);
       }
     }
   }
 
   void SimpleHeader::setTimestamp() {
-    std::bitset<32> temp(num);
+    /*std::bitset<32> temp(num);
     packet.timestamp.reset();
     for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
         pscket.timestamp.set(i);
       }
-    }
+    }*/
   }
 
   void SimpleHeader::setCRC1(unsigned int num) {
@@ -156,7 +149,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     packet.crc1.reset();
     for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
-        pscket.crc1.set(i);
+        packet.crc1.set(i);
       }
     }
   }
@@ -166,7 +159,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     packet.crc2.reset();
     for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
-        pscket.crc2.set(i);
+        packet.crc2.set(i);
       }
     }
   }

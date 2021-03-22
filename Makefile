@@ -3,14 +3,14 @@ PROJECT_DIR = 3780-CTP
 PROJECT = 3780-CTP
 
 TESTLIBS = -lgtest -lgtest_main -lpthread
-OBJS = SimpleHeader.o test_header.o
+OBJS = SimpleHeader.o
 
 CXX=g++
 CXXVERSION= -std=c++11
 
 BINARIES = receiver sender
 
-testSH: $(OBJS)
+testSH: $(OBJS) test_header.o
 				$(CXX) -o $@ $(OBJS) $(TESTLIBS)
 
 all: $(BINARIES)
