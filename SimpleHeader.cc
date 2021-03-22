@@ -48,7 +48,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     unsigned int headint = (int) longhead;
   }
 
-  void setType(unsigned int type) {
+  void SimpleHeader::setType(unsigned int type) {
     packet.type.reset();
 
     switch (type) {
@@ -62,7 +62,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     }
   }
 
-  void setWindow(unsigned int w) {
+  void SimpleHeader::setWindow(unsigned int w) {
     packet.window.reset();
 
     std::bitset<5> bitWindow(w);
