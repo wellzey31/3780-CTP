@@ -48,9 +48,9 @@ public:
   void setWindow(unsigned int w);
   void setSeqNum(unsigned int seqNum);
   void setLength(unsigned int l);
-  void setTimestamp();
-  void setCRC1(unsigned int);
-  void setCRC2(unsigned int);
+  void setTimestamp(unsigned int num);
+  void setCRC1(unsigned int num);
+  void setCRC2(unsigned int num);
 
 
   // returns the size of the packet, including headers and data
@@ -66,8 +66,8 @@ public:
 
   // returns pointer to the structure holding the thePacket, including the headers
   // To be used with recvfrom or sendto
-  void * thePacket() {
-    return &packet;
+  simplepacket thePacket() {
+    return packet;
   }
 
   void * thePayload() {
