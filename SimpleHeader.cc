@@ -59,6 +59,7 @@ std::bitset<128> SimpleHeader::getHeader() const {
       count++;
     }
   }
+  std::cerr << "count: " << count << std::endl;
   return temp;
 }
 
