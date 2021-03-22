@@ -107,7 +107,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
       packet.tr.reset();
       if (tr == 1) packet.tr.set(0);
     } else {
-      std::cerr << "Error with setTR" << std::endl;
+      std::cerr << "Error with setTR parameter" << std::endl;
     }
   }
 
@@ -143,14 +143,14 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     }
   }
 
-  void SimpleHeader::setTimestamp() {
-    /*std::bitset<32> temp(num);
+  void SimpleHeader::setTimestamp(unsigned int num) {
+    std::bitset<32> temp(num);
     packet.timestamp.reset();
     for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
         pscket.timestamp.set(i);
       }
-    }*/
+    }
   }
 
   void SimpleHeader::setCRC1(unsigned int num) {
