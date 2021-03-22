@@ -19,17 +19,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
       //window passed in as a value from 0 to 31
       setWindow(window);
 
-      std::bitset<8> bitSequence(sequence);
-
-      std::cout << "sequence: " << sequence << "\n";
-
-      std::cout << "bitSequence: " << bitSequence << "\n";
-
-      for (int i = 0; i < 8; i++) {
-        if (bitSequence[i] == 1) {
-          header.set(i+8);
-        }
-      }
+      setSeqNum(sequence);
 
       std::bitset<16> bitLength(length);
 
@@ -74,7 +64,14 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   }
 
   void SimpleHeader::setSeqNum(unsigned int seqNum) {
+    packet.seqnum.reset();
 
+    std::bitset<8> bitSequence(seqNum);
+    for (int i = 0; i < 8; i++) {
+      if (bitSequence[i] == 1) {
+        packet.seqnum.set(i);
+      }
+    }
   }
 
   void SimpleHeader::setLength(unsigned int l) {
