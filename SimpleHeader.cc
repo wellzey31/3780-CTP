@@ -5,7 +5,7 @@
 SimpleHeader::SimpleHeader() {}
 
 unsigned int SimpleHeader::getHeader() const {
-  return packet.lsb | (packet.msb<<8);
+  return 1;
 }
 
 void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
@@ -46,6 +46,8 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
 
     unsigned long longhead = header.to_ulong();
     unsigned int headint = (int) longhead;
+<<<<<<< HEAD
+=======
   }
 
   void setType(unsigned int type) {
@@ -91,6 +93,7 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
 
   void setCRC2() {
 
+>>>>>>> 49034efc4be7319bdc83fd3aab112d85e52e1dc4
   }
 
   unsigned int SimpleHeader::getType() {
