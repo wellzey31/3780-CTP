@@ -26,7 +26,7 @@ public:
   // default constructor initializes the header to zero.
   SimpleHeader();
 
-  // returns the header value
+  // returns the header as 128 bit bitset object
   std::bitset<128> getHeader();
 
   void buildHeader(unsigned int length, unsigned int sequence,
