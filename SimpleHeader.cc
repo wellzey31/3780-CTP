@@ -4,7 +4,7 @@
 
 SimpleHeader::SimpleHeader() {}
 
-std::bitset<128> SimpleHeader::getHeader() const {
+std::bitset<128> SimpleHeader::getHeader() {
   std::bitset<128> temp;
   int count = 0;
   //add on type bits

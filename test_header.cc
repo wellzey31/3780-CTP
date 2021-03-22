@@ -72,5 +72,5 @@ TEST_F(HeaderTest, setHeader) {
   //getHeader long long should == 158456325065422163343097070102
   std::string bit_string = "00000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000100000001000010110";
   std::bitset<128> expectedHeader(bit_string);
-  EXPECT_EQUAL(h_->getHeader() == expectedHeader);
+  EXPECT_EQ(h_->getHeader(), expectedHeader);
 }
