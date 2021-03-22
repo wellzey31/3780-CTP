@@ -19,7 +19,17 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
       //window passed in as a value from 0 to 31
       setWindow(window);
 
-      setSeqNum(sequence);
+      std::bitset<8> bitSequence(sequence);
+
+      std::cout << "sequence: " << sequence << "\n";
+
+      std::cout << "bitSequence: " << bitSequence << "\n";
+
+      for (int i = 0; i < 8; i++) {
+        if (bitSequence[i] == 1) {
+          header.set(i+8);
+        }
+      }
 
       std::bitset<16> bitLength(length);
 
@@ -38,13 +48,9 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     unsigned int headint = (int) longhead;
   }
 
-<<<<<<< HEAD
-  void SimpleHeader::setType(unsigned int type) {
-=======
   void setType(unsigned int type) {
     packet.type.reset();
 
->>>>>>> 9dc9a93a9f23c81b06be5a919ce5160e1fde7578
     switch (type) {
       case 1:
         packet.type.set(0); //sets rightmost bit to 1
@@ -56,12 +62,8 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     }
   }
 
-<<<<<<< HEAD
-  void SimpleHeader::setWindow(unsigned int w) {
-=======
   void setWindow(unsigned int w) {
     packet.window.reset();
->>>>>>> 9dc9a93a9f23c81b06be5a919ce5160e1fde7578
 
     std::bitset<5> bitWindow(w);
     for (int i = 0; i < 5; i++) {
@@ -71,19 +73,8 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     }
   }
 
-<<<<<<< HEAD
   void SimpleHeader::setSeqNum(unsigned int seqNum) {
-=======
-  void setSeqNum(unsigned int seqNum) {
-    packet.seqnum.reset();
->>>>>>> ea6da330bf7da2652ba4c82fef31a2d7b67b6c12
 
-    std::bitset<8> bitSequence(seqNum);
-    for (int i = 0; i < 8; i++) {
-      if (bitSequence[i] == 1) {
-        packet.seqnum.set(i);
-      }
-    }
   }
 
   void SimpleHeader::setLength(unsigned int l) {
