@@ -13,25 +13,11 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   {
     std::bitset<32> header;
     //type should be 1,2,3 but never 0
-    if (type != 0) {
-      switch (type) {
-        case 1:
-          header.set(0); //sets rightmost bit to 1
-        case 2:
-          header.set(1); //sets second from right to 1
-        case 3:
-          header.set(0);
-          header.set(1);
-      }
+    setType(type);
       //not sure how we deal with the TR (truncated bit) we think this gets done for us
 
       //window passed in as a value from 0 to 31
-      std::bitset<5> bitWindow(window);
-      for (int i = 0; i < 5; i++) {
-        if (bitWindow[i] == 1) {
-          header.set(i+3);
-        }
-      }
+      setWindow(window);
 
       std::bitset<8> bitSequence(sequence);
 
@@ -63,6 +49,8 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   }
 
   void setType(unsigned int type) {
+    packet.type.reset();
+
     switch (type) {
       case 1:
         packet.type.set(0); //sets rightmost bit to 1
@@ -75,7 +63,14 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   }
 
   void setWindow(unsigned int w) {
+    packet.window.reset();
 
+    std::bitset<5> bitWindow(w);
+    for (int i = 0; i < 5; i++) {
+      if (bitWindow[i] == 1) {
+        packet.window.set(i);
+      }
+    }
   }
 
   void setSeqNum(unsigned int seqNum) {
