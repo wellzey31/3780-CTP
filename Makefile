@@ -8,7 +8,7 @@ OBJS = SimpleHeader.o
 CXX=g++
 CXXVERSION= -std=c++11
 
-BINARIES = receiver sender
+BINARIES = receiver sender testSH
 
 testSH: $(OBJS) test_header.o
 				$(CXX) -o $@ $(OBJS) $(TESTLIBS)
