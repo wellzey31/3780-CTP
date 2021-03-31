@@ -31,7 +31,7 @@ int main(int argc, char const *argv[]) {
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << std::endl;
   }
-  else if (argc == 5 && argv[1] == "-f") { 
+  else if (argc == 5 && argv[1] == "-f") {
     host = argv[3];
     file = argv[2];
     port = argv[4];
@@ -62,7 +62,10 @@ int main(int argc, char const *argv[]) {
   std::cout << "What would you like to say. " << std::endl;
   std::getline(std::cin, msg);
 
-  send(s, msg.c_str(), strlen(msg.c_str()), 0);
+  std::ifstream input( header.getPacket(), std::ios::binary );
+  std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
+
+  send(s, input, input.size(), 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
