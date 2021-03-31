@@ -3,6 +3,9 @@
 
 #include <cstdint>
 #include <bitset>
+#include <fstream>
+#include <iterator>
+#include <vector>
 #define DATA_SZ 256
 
 struct simplepacket {
@@ -68,6 +71,13 @@ public:
   // To be used with recvfrom or sendto
   simplepacket thePacket() {
     return packet;
+  }
+
+  void setPaylod(string file) {
+    std::ifstream input( file, std::ios::binary );
+
+    // copies all data into buffer
+    this->data(std::istreambuf_iterator<char>(input), {})
   }
 
   void * thePayload() {
