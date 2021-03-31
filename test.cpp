@@ -1,20 +1,17 @@
 #include "SimpleHeader.h"
 #include <iostream>
 #include <bitset>
+#include <fstream>
+#include <iterator>
+#include <algorithm>
 
-using namespace std;
+int main()
+{
+    std::ifstream input( "myText.txt", std::ios::binary );
+    std::ofstream output( "output.txt", std::ios::binary );
 
-int main() {
-  SimpleHeader s;
-
-  s.setHeader(16);
-
-  s.buildHeader(512, 255, 3, 31);
-
-  cout << endl;
-
-  //cout << s.getHeader() << endl;
-
-
-  return 0;
+    std::copy(
+        std::istreambuf_iterator<char>(input),
+        std::istreambuf_iterator<char>( ),
+        std::ostreambuf_iterator<char>(output));
 }
