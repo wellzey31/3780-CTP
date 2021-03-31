@@ -7,11 +7,20 @@
 #include <string.h>
 #include <iostream>
 #include <cstring>
-#include <fstream>
-#include <iterator>
-#include <vector>
+
+#include "SimpleHeader.h"
 
 int main(int argc, char const *argv[]) {
+  SimpleHeader header = new SimpleHeader();
+  header.setType(1);
+  header.setTR(0);
+  header.setWindow(1);
+  header.setSeqNum(0);
+  header.setLength(0);
+  header.setTimestamp(0);
+  header.setCRC1(0);
+  header.setCRC2(0);
+
   int s, sread;
 
   struct sockaddr_in sa;
@@ -40,6 +49,7 @@ int main(int argc, char const *argv[]) {
     port = argv[4];
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << " file: " << file << std::endl;
+    header.setPaylod(file);
   }
   else {
         std::cerr << "[ERROR] incorrect arguments." << std::endl;
