@@ -78,7 +78,8 @@ public:
     std::ifstream input( file, std::ios::binary );
 
     // copies all data into buffer
-    thePacket().data(std::istreambuf_iterator<char>(input), {})
+    std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
+    packet.data = buffer;
   }
 
   void * thePayload() {
