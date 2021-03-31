@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iterator>
 #include <vector>
+#include <string>
 #define DATA_SZ 256
 
 struct simplepacket {
@@ -73,11 +74,11 @@ public:
     return packet;
   }
 
-  void setPaylod(string file) {
+  void setPaylod(std::string file) {
     std::ifstream input( file, std::ios::binary );
 
     // copies all data into buffer
-    this->data(std::istreambuf_iterator<char>(input), {})
+    thePacket().data(std::istreambuf_iterator<char>(input), {})
   }
 
   void * thePayload() {
