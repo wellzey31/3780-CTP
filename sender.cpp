@@ -7,6 +7,9 @@
 #include <string.h>
 #include <iostream>
 #include <cstring>
+#include <fstream>
+#include <iterator>
+#include <vector>
 
 int main(int argc, char const *argv[]) {
   int s, sread;
