@@ -49,7 +49,7 @@ int main(int argc, char const *argv[]) {
     port = argv[4];
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << " file: " << file << std::endl;
-    header.setPaylod(file);
+    header->setPaylod(file);
   }
   else {
         std::cerr << "[ERROR] incorrect arguments." << std::endl;
@@ -75,10 +75,10 @@ int main(int argc, char const *argv[]) {
   std::cout << "What would you like to say. " << std::endl;
   std::getline(std::cin, msg);
 
-  std::ifstream input(header.getPacket(), std::ios::binary);
+  std::ifstream input(header->thePacket(), std::ios::binary);
   std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
 
-  send(s, input, input.size(), 0);
+  send(s, header->thePacket(), 256, 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;

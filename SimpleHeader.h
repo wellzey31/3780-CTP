@@ -18,7 +18,7 @@ struct simplepacket {
   std::bitset<32> timestamp;
   std::bitset<32> crc1;
   std::bitset<32> crc2;
-  std::vector<unsigned char> data;
+  char data[DATA_SZ];
     // payload
 };
 
@@ -84,7 +84,7 @@ public:
     packet.data = buffer;
   }
 
-  void * thePayload() {
+  void* thePayload() {
     return packet.data;
   }
 };
