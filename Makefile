@@ -8,18 +8,18 @@ OBJS = SimpleHeader.o
 CXX=g++
 CXXVERSION= -std=c++11
 
-BINARIES = receiver sender testSH
+BINARIES = receiver sender
 
 testSH: $(OBJS) test_header.o
 				$(CXX) -o $@ $(OBJS) $(TESTLIBS)
 
 all: $(BINARIES)
 
-receiver: receiver.cpp $(OBJS)
-	$(CXX) $(CXXFLAGS) -o receiver receiver.cpp
+receiver: $(OBJS) receiver.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) receiver.cpp
 
-sender: sender.cpp $(OBJS)
-	$(CXX) $(CXXFLAGS) -o sender sender.cpp
+sender: $(OBJS) sender.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) sender.cpp
 
 .PHONY: clean
 clean:
