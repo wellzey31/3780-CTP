@@ -10,6 +10,12 @@
 #include <cstring>
 
 int main(int argc, char const *argv[]) {
+
+  std::cout << argc << " ";
+  for (int i = 0; i < argc; i++) {
+    std::cout << argv[i] << " ";
+  }
+
   SimpleHeader* header = new SimpleHeader();
   header -> setType(1);
   header -> setTR(0);
@@ -42,7 +48,7 @@ int main(int argc, char const *argv[]) {
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << std::endl;
   }
-  else if (argc == 5 && argv[1] == "-f") {
+  else if (argc == 5) {
     host = argv[3];
     file = argv[2];
     port = argv[4];
