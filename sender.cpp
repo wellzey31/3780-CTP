@@ -77,8 +77,11 @@ int main(int argc, char const *argv[]) {
 
   std::ifstream input(header->thePacket(), std::ios::binary);
   std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
+  void* voidpointer;
+  voidpointer = &buffer;
 
-  send(s, header->thePacket(), 256, 0);
+
+  send(s, voidpointer, buffer.size(), 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
