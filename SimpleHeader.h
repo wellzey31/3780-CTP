@@ -81,7 +81,7 @@ public:
     // copies all data into buffer
     std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
 
-    packet.data = buffer;
+    //packet.data = buffer;
   }
 
   void* thePayload() {

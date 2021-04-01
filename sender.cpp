@@ -1,3 +1,4 @@
+#include "SimpleHeader.h"
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -7,8 +8,6 @@
 #include <string.h>
 #include <iostream>
 #include <cstring>
-
-#include "SimpleHeader.h"
 
 int main(int argc, char const *argv[]) {
   SimpleHeader* header = new SimpleHeader();
@@ -75,7 +74,7 @@ int main(int argc, char const *argv[]) {
   std::cout << "What would you like to say. " << std::endl;
   std::getline(std::cin, msg);
 
-  std::ifstream input(header->thePacket(), std::ios::binary);
+  std::ifstream input(file, std::ios::binary);
   std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
   void* voidpointer;
   voidpointer = &buffer;
