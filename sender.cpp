@@ -11,7 +11,7 @@
 #include "SimpleHeader.h"
 
 int main(int argc, char const *argv[]) {
-  SimpleHeader header = new SimpleHeader();
+  SimpleHeader *header = new SimpleHeader();
   header.setType(1);
   header.setTR(0);
   header.setWindow(1);
@@ -75,10 +75,10 @@ int main(int argc, char const *argv[]) {
   std::cout << "What would you like to say. " << std::endl;
   std::getline(std::cin, msg);
 
-  std::ifstream input( header.getPacket(), std::ios::binary );
+  std::ifstream input( header.thePacket(), std::ios::binary );
   std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
 
-  send(s, input, input.size(), 0);
+  send(s, buffer, buffer.size(), 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;

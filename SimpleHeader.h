@@ -18,7 +18,8 @@ struct simplepacket {
   std::bitset<32> timestamp;
   std::bitset<32> crc1;
   std::bitset<32> crc2;
-  char data[DATA_SZ];  // payload
+  std::vector<unsigned char> data;
+    // payload
 };
 
 // class to be tested. Implements a simple packet structure consisting of a 16 bit integer + data
@@ -79,6 +80,7 @@ public:
 
     // copies all data into buffer
     std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
+
     packet.data = buffer;
   }
 
