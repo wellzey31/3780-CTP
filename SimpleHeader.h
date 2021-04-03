@@ -75,13 +75,21 @@ public:
     return packet;
   }
 
-  void setPaylod(std::string file) {
-    std::ifstream input( file, std::ios::binary );
+  void setPaylod(std::string msg) {
+    for (int i = 0; i < msg.length(); ++i) {
+      packet.data[i] = msg[i];
+    }
+  }
 
-    // copies all data into buffer
-    std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
+  void setPaylodFile(std::string file) {
+    std::ifstream input(file, std::ios::binary);
 
-    //packet.data = buffer;
+    int i = 0;
+    char c;
+    while(input.get(c)){
+      packet.data[i] = c;
+      ++i;
+    }
   }
 
   void* thePayload() {

@@ -29,13 +29,15 @@ int main(int argc, char const *argv[]) {
   int s, sread;
 
   struct sockaddr_in sa;
-  std::string host, port, file;
+  std::string host, port, file, argv1;
   short unsigned int p;
   char msgin[1024] = {0};
 
   std::string msg;
 
   s = socket(AF_INET, SOCK_STREAM, 0);
+
+  argv1 = argv[1];
 
   if(s == -1) {
     std::cerr << "[ERROR] socket = -1.\n";
@@ -47,14 +49,17 @@ int main(int argc, char const *argv[]) {
     port = argv[2];
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << std::endl;
+    std::cout << "What would you like to say. " << std::endl;
+    std::getline(std::cin, msg);
+    header -> setPaylod(msg);
   }
-  else if (argc == 5) {
+  else if (argc == 5 && argv1.compare("-f") == 0) {
     host = argv[3];
     file = argv[2];
     port = argv[4];
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << " file: " << file << std::endl;
-    header->setPaylod(file);
+    header -> setPaylodFile(file);
   }
   else {
         std::cerr << "[ERROR] incorrect arguments." << std::endl;
@@ -77,16 +82,13 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
-  std::cout << "What would you like to say. " << std::endl;
-  std::getline(std::cin, msg);
-
-  std::ifstream input(file, std::ios::binary);
+  /*std::ifstream input(file, std::ios::binary);
   std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
   void* voidpointer;
-  voidpointer = &buffer;
+  voidpointer = &buffer;*/
 
-
-  send(s, voidpointer, buffer.size(), 0);
+  //send(s, voidpointer, buffer.size(), 0);
+  send(s, header -> thePayload(), 256, 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
