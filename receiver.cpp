@@ -7,6 +7,7 @@
 #include <string.h>
 #include <iostream>
 #include <cstring>
+#include <fstream>
 
 int main(int argc, char const *argv[]) {
   int s, new_socket, valread;
@@ -15,8 +16,10 @@ int main(int argc, char const *argv[]) {
   int opt = 1;
   int addrlen = sizeof(sa);
   char buffer[1024] = {0};
-  std::string port, file;
+  std::string port, file, argv1;
   char *message = "Hola este es el servidor";
+
+  argv1 = argv[1];
 
   if (argc < 2 || argc > 4) {
         std::cerr << "[ERROR] incorrect arguments.";
@@ -25,7 +28,7 @@ int main(int argc, char const *argv[]) {
     } else if (argc == 2) {
         port = argv[1];
         std::cout << " port: " << port << std::endl;
-    }  else if (argc == 4) { //&& argv[1] == "-f") {
+    }  else if (argc == 4 && argv1.compare("-f") == 0) {
         file = argv[2];
         port = argv[3];
         std::cout << " port: " << port << " file: " << file << std::endl;
@@ -65,8 +68,16 @@ int main(int argc, char const *argv[]) {
         std::cerr << "accept" << std::endl;
         exit(EXIT_FAILURE);
     }
-    valread = read( new_socket , buffer, 1024);
-    printf("%s\n",buffer );
+
+    valread = read(new_socket, buffer, 1024);
+    if (argv1.compare("-f") == 0) {
+      std::ofstream input;
+      input.open(file);
+      input << buffer;
+      input.close();
+    } else {
+      printf("%s\n", buffer);
+    }
     send(new_socket , message , strlen(message) , 0 );
     printf("Mensaje de servidor enviado\n");
 
