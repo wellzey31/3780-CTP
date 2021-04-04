@@ -24,6 +24,8 @@ std::string getFileMsg(std::string file) {
 }
 
 int main(int argc, char const *argv[]) {
+  int seqnum = 0;
+
   std::cout << argc << " ";
   for (int i = 0; i < argc; i++) {
     std::cout << argv[i] << " ";
@@ -31,9 +33,8 @@ int main(int argc, char const *argv[]) {
 
   SimpleHeader* header = new SimpleHeader();
   header -> setType(1);
-  header -> setTR(0);
   header -> setWindow(1);
-  header -> setSeqNum(0);
+  header -> setSeqNum(seqnum);
   header -> setTimestamp(0);
   header -> setCRC1(0);
   header -> setCRC2(0);
@@ -102,5 +103,6 @@ int main(int argc, char const *argv[]) {
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
 
+  delete header;
   return 0;
 }

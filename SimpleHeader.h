@@ -85,22 +85,10 @@ public:
   }
 
   void setPaylod(std::string msg) {
-    for (int i = 0; i < msg.length(); ++i) {
+    for (int i = 0; i < msg.length() && i < DATA_SZ; ++i) {
       packet.data[i] = msg[i];
     }
     setLength(msg.length());
-  }
-
-  void setPaylodFile(std::string file) {
-    std::ifstream input(file, std::ios::binary);
-
-    int i = 0;
-    char c;
-    while(input.get(c)){
-      packet.data[i] = c;
-      ++i;
-    }
-    setLength(i);
   }
 
   void* thePayload() {
