@@ -70,7 +70,7 @@ int main(int argc, char const *argv[]) {
         std::cerr << "usage: sender -f <file> <ip> <port>\n";
         exit(1);
   }
-  
+
   sa.sin_family = AF_INET;
 	sa.sin_port = htons(p);
 
@@ -87,33 +87,31 @@ int main(int argc, char const *argv[]) {
   }
 
   SimpleHeader* header = new SimpleHeader();
+  header -> setWindow(1);
   while (msg.compare("") != 0) {
     header -> setType(1);
-    header -> setWindow(1);
     header -> setSeqNum(seqnum);
     header -> setTimestamp(0);
     header -> setCRC1(0);
     header -> setCRC2(0);
 
     msg = header -> setPaylod(msg);
-    std::cerr << msg << std::endl;
     unsigned char buffer[640];
     header -> serializePacket(buffer);
 
     send(s, buffer, 640, 0);
-    std::cout << "Message sent." << std::endl;
+    std::cout << "Packet Sent." << std::endl;
 
     ++seqnum;
   }
 
   header -> setType(3);
-  header -> setWindow(1);
   header -> setSeqNum(seqnum);
   header -> setTimestamp(0);
   header -> setCRC1(0);
   header -> setCRC2(0);
 
-  msg = header -> setPaylod(" ");
+  msg = header -> setPaylod("");
   unsigned char buffer[640];
   header -> serializePacket(buffer);
   send(s, buffer, 640, 0);
