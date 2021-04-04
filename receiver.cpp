@@ -71,7 +71,7 @@ int main(int argc, char const *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    valread = read(new_socket, buffer, 1024);
+    valread = read(new_socket, buffer, 4224);
     SimpleHeader* read = new SimpleHeader();
     read -> deserializePacket(buffer);
 
