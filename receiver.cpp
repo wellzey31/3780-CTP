@@ -9,13 +9,15 @@
 #include <cstring>
 #include <fstream>
 
+#include "SimpleHeader.h"
+
 int main(int argc, char const *argv[]) {
   int s, new_socket, valread;
 
   struct sockaddr_in sa;
   int opt = 1;
   int addrlen = sizeof(sa);
-  char buffer[1024] = {0};
+  unsigned char buffer[1024] = {0};
   std::string port, file, argv1;
   char *message = "Hola este es el servidor";
 
@@ -70,12 +72,15 @@ int main(int argc, char const *argv[]) {
     }
 
     valread = read(new_socket, buffer, 1024);
+    SimpleHeader* read = new SimpleHeader();
+    read -> deserializePacket(buffer);
+
     if (argv1.compare("-f") == 0) {
       std::ofstream input(file, std::ios::binary);
-      input << buffer;
+      input << read -> thePacket().data;
       input.close();
     } else {
-      printf("%s\n", buffer);
+      printf("%s\n", read -> thePacket().data);
     }
 
     send(new_socket , message , strlen(message) , 0 );

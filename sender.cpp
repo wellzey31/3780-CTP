@@ -7,10 +7,10 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <iostream>
+#include <fstream>
 #include <cstring>
 
 int main(int argc, char const *argv[]) {
-
   std::cout << argc << " ";
   for (int i = 0; i < argc; i++) {
     std::cout << argv[i] << " ";
@@ -21,7 +21,6 @@ int main(int argc, char const *argv[]) {
   header -> setTR(0);
   header -> setWindow(1);
   header -> setSeqNum(0);
-  header -> setLength(1);
   header -> setTimestamp(0);
   header -> setCRC1(0);
   header -> setCRC2(0);
@@ -82,14 +81,8 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
-  /*std::ifstream input(file, std::ios::binary);
-  std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
-  void* voidpointer;
-  voidpointer = &buffer;*/
-
-  //send(s, voidpointer, buffer.size(), 0);
   unsigned char buffer[384];
-  header -> serilizePacket(buffer);
+  header -> serializePacket(buffer);
 
   send(s, buffer, 256, 0);
   std::cout << "Message sent." << std::endl;

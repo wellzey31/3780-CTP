@@ -27,8 +27,8 @@ class SimpleHeader {
 private:
   struct simplepacket packet;
 
-  unsigned char* serilizeChar(unsigned char* b);
-  unsigned char* serilizeString(unsigned char* b, std::string s, int i);
+  unsigned char* serializeChar(unsigned char* b);
+  unsigned char* serializeString(unsigned char* b, std::string s, int i);
 
 public:
   // default constructor initializes the header to zero.
@@ -40,8 +40,12 @@ public:
   void buildHeader(unsigned int length, unsigned int sequence,
     unsigned int type, unsigned int window);
 
-  void serilizePacket(unsigned char* b);
+  void serializePacket(unsigned char* b);
 
+  void deserializePacket(unsigned char* b);
+  template <size_t bitsetSize>
+  void deserializeBitset(int &i, int j, unsigned char* b, std::bitset<bitsetSize> &p);
+  void deserializeString(int &i, int j, unsigned char* b);
   //getters to return values as int for each header field
   unsigned int getType();
   unsigned int getTR();

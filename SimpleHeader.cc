@@ -2,21 +2,30 @@
 #include <bitset>
 #include <iostream>
 
-SimpleHeader::SimpleHeader() {}
-
-void SimpleHeader::serilizePacket(unsigned char* b) {
-  b = serilizeString(b, packet.crc2.to_string(), 32);
-  b = serilizeChar(b);
-  b = serilizeString(b, packet.crc1.to_string(), 32);
-  b = serilizeString(b, packet.timestamp.to_string(), 32);
-  b = serilizeString(b, packet.length.to_string(), 16);
-  b = serilizeString(b, packet.seqnum.to_string(), 8);
-  b = serilizeString(b, packet.window.to_string(), 5);
-  b = serilizeString(b, packet.tr.to_string(), 1);
-  b = serilizeString(b, packet.type.to_string(), 2);
+SimpleHeader::SimpleHeader() {
+  packet.type.reset();
+  packet.tr.reset();
+  packet.window.reset();
+  packet.seqnum.reset();
+  packet.length.reset();
+  packet.timestamp.reset();
+  packet.crc1.reset();
+  packet.crc2.reset();
 }
 
-unsigned char* SimpleHeader::serilizeChar(unsigned char* b) {
+void SimpleHeader::serializePacket(unsigned char* b) {
+  b = serializeString(b, packet.type.to_string(), 2);
+  b = serializeString(b, packet.tr.to_string(), 1);
+  b = serializeString(b, packet.window.to_string(), 5);
+  b = serializeString(b, packet.seqnum.to_string(), 8);
+  b = serializeString(b, packet.length.to_string(), 16);
+  b = serializeString(b, packet.timestamp.to_string(), 32);
+  b = serializeString(b, packet.crc1.to_string(), 32);
+  b = serializeChar(b);
+  b = serializeString(b, packet.crc2.to_string(), 32);
+}
+
+unsigned char* SimpleHeader::serializeChar(unsigned char* b) {
   std::cout << packet.data << std::endl;
   for(int i = 0; i < packet.length.to_ulong(); ++i) {
     b[i] = packet.data[i];
@@ -25,12 +34,45 @@ unsigned char* SimpleHeader::serilizeChar(unsigned char* b) {
   return b + packet.length.to_ulong();
 }
 
-unsigned char* SimpleHeader::serilizeString(unsigned char* b, std::string s, int i) {
+unsigned char* SimpleHeader::serializeString(unsigned char* b, std::string s, int i) {
   for (int j = 0; j < i; ++j)
   {
     b[j] = s[j];
   }
   return b + i;
+}
+
+void SimpleHeader::deserializePacket(unsigned char* b) {
+  int i = 0;
+  deserializeBitset(i, 2, b, packet.type);
+  deserializeBitset(i, 1, b, packet.tr);
+  deserializeBitset(i, 5, b, packet.window);
+  deserializeBitset(i, 8, b, packet.seqnum);
+  deserializeBitset(i, 16, b, packet.length);
+  deserializeBitset(i, 32, b, packet.timestamp);
+  deserializeBitset(i, 32, b, packet.crc1);
+  deserializeString(i, packet.length.to_ulong(), b);
+  deserializeBitset(i, 32, b, packet.crc2);
+}
+
+template <size_t bitsetSize>
+void SimpleHeader::deserializeBitset(int &i, int j, unsigned char* b, std::bitset<bitsetSize> &p) {
+  while (j - 1 > -1) {
+    if (b[i] == '1') {
+      p.set(j - 1);
+    }
+    ++i;
+    --j;
+  }
+}
+
+void SimpleHeader::deserializeString(int &i, int j, unsigned char* b) {
+  int k = 0;
+  while (k < j) {
+    packet.data[k] = b[i];
+    ++i;
+    ++k;
+  }
 }
 
 std::bitset<128> SimpleHeader::getHeader() {
