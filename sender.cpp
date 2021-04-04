@@ -31,14 +31,6 @@ int main(int argc, char const *argv[]) {
     std::cout << argv[i] << " ";
   }
 
-  SimpleHeader* header = new SimpleHeader();
-  header -> setType(1);
-  header -> setWindow(1);
-  header -> setSeqNum(seqnum);
-  header -> setTimestamp(0);
-  header -> setCRC1(0);
-  header -> setCRC2(0);
-
   int s, sread;
 
   struct sockaddr_in sa;
@@ -78,8 +70,7 @@ int main(int argc, char const *argv[]) {
         std::cerr << "usage: sender -f <file> <ip> <port>\n";
         exit(1);
   }
-  header -> setPaylod(msg);
-
+  
   sa.sin_family = AF_INET;
 	sa.sin_port = htons(p);
 
@@ -95,11 +86,38 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
+  SimpleHeader* header = new SimpleHeader();
+  while (msg.compare("") != 0) {
+    header -> setType(1);
+    header -> setWindow(1);
+    header -> setSeqNum(seqnum);
+    header -> setTimestamp(0);
+    header -> setCRC1(0);
+    header -> setCRC2(0);
+
+    msg = header -> setPaylod(msg);
+    std::cerr << msg << std::endl;
+    unsigned char buffer[640];
+    header -> serializePacket(buffer);
+
+    send(s, buffer, 640, 0);
+    std::cout << "Message sent." << std::endl;
+
+    ++seqnum;
+  }
+
+  header -> setType(3);
+  header -> setWindow(1);
+  header -> setSeqNum(seqnum);
+  header -> setTimestamp(0);
+  header -> setCRC1(0);
+  header -> setCRC2(0);
+
+  msg = header -> setPaylod(" ");
   unsigned char buffer[640];
   header -> serializePacket(buffer);
-
   send(s, buffer, 640, 0);
-  std::cout << "Message sent." << std::endl;
+
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
 

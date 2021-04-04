@@ -71,17 +71,26 @@ int main(int argc, char const *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+  std::string msg = "";
+  while (true) {
     valread = read(new_socket, buffer, 640);
+
     SimpleHeader* read = new SimpleHeader();
     read -> deserializePacket(buffer);
-
-    if (argv1.compare("-f") == 0) {
-      std::ofstream input(file, std::ios::binary);
-      input << read -> thePacket().data;
-      input.close();
-    } else {
-      printf("%s\n", read -> thePacket().data);
+    if (read -> getType() == 3) {
+      break;
     }
+
+    msg = msg + read -> thePacket().data;
+  }
+
+  if (argv1.compare("-f") == 0) {
+    std::ofstream input(file, std::ios::binary);
+    input << msg;
+    input.close();
+  } else {
+    printf("%s\n", msg);
+  }
 
     send(new_socket , message , strlen(message) , 0 );
     printf("Mensaje de servidor enviado\n");

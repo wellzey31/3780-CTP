@@ -26,7 +26,6 @@ void SimpleHeader::serializePacket(unsigned char* b) {
 }
 
 unsigned char* SimpleHeader::serializeChar(unsigned char* b) {
-  std::cout << packet.data << std::endl;
   for(int i = 0; i < packet.length.to_ulong(); ++i) {
     b[i] = packet.data[i];
   }
