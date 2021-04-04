@@ -84,7 +84,7 @@ int main(int argc, char const *argv[]) {
   unsigned char buffer[384];
   header -> serializePacket(buffer);
 
-  send(s, buffer, 256, 0);
+  send(s, buffer, 512, 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
