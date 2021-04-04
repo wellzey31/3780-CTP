@@ -10,6 +10,19 @@
 #include <fstream>
 #include <cstring>
 
+std::string getFileMsg(std::string file) {
+  std::ifstream input(file, std::ios::binary);
+
+  int i = 0;
+  char c;
+  std::string s = "";
+  while(input.get(c)){
+    s = s + c;
+    ++i;
+  }
+  return s;
+}
+
 int main(int argc, char const *argv[]) {
   std::cout << argc << " ";
   for (int i = 0; i < argc; i++) {
@@ -50,7 +63,6 @@ int main(int argc, char const *argv[]) {
     std::cout << "host: " << host << " port: " << port << std::endl;
     std::cout << "What would you like to say. " << std::endl;
     std::getline(std::cin, msg);
-    header -> setPaylod(msg);
   }
   else if (argc == 5 && argv1.compare("-f") == 0) {
     host = argv[3];
@@ -58,13 +70,14 @@ int main(int argc, char const *argv[]) {
     port = argv[4];
     p = std::stoi(port);
     std::cout << "host: " << host << " port: " << port << " file: " << file << std::endl;
-    header -> setPaylodFile(file);
+    msg = getFileMsg(file);
   }
   else {
         std::cerr << "[ERROR] incorrect arguments." << std::endl;
         std::cerr << "usage: sender -f <file> <ip> <port>\n";
         exit(1);
   }
+  header -> setPaylod(msg);
 
   sa.sin_family = AF_INET;
 	sa.sin_port = htons(p);
@@ -81,10 +94,10 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
-  unsigned char buffer[4224];
+  unsigned char buffer[640];
   header -> serializePacket(buffer);
 
-  send(s, buffer, 4224, 0);
+  send(s, buffer, 640, 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
