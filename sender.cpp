@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]) {
   header -> setTR(0);
   header -> setWindow(1);
   header -> setSeqNum(0);
-  header -> setLength(0);
+  header -> setLength(1);
   header -> setTimestamp(0);
   header -> setCRC1(0);
   header -> setCRC2(0);
@@ -88,7 +88,10 @@ int main(int argc, char const *argv[]) {
   voidpointer = &buffer;*/
 
   //send(s, voidpointer, buffer.size(), 0);
-  send(s, header -> thePayload(), 256, 0);
+  unsigned char buffer[384];
+  header -> serilizePacket(buffer);
+
+  send(s, buffer, 256, 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;

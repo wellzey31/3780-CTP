@@ -71,13 +71,13 @@ int main(int argc, char const *argv[]) {
 
     valread = read(new_socket, buffer, 1024);
     if (argv1.compare("-f") == 0) {
-      std::ofstream input;
-      input.open(file);
+      std::ofstream input(file, std::ios::binary);
       input << buffer;
       input.close();
     } else {
       printf("%s\n", buffer);
     }
+
     send(new_socket , message , strlen(message) , 0 );
     printf("Mensaje de servidor enviado\n");
 

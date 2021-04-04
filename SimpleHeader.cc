@@ -4,6 +4,35 @@
 
 SimpleHeader::SimpleHeader() {}
 
+void SimpleHeader::serilizePacket(unsigned char* b) {
+  b = serilizeString(b, packet.crc2.to_string(), 32);
+  b = serilizeChar(b);
+  b = serilizeString(b, packet.crc1.to_string(), 32);
+  b = serilizeString(b, packet.timestamp.to_string(), 32);
+  b = serilizeString(b, packet.length.to_string(), 16);
+  b = serilizeString(b, packet.seqnum.to_string(), 8);
+  b = serilizeString(b, packet.window.to_string(), 5);
+  b = serilizeString(b, packet.tr.to_string(), 1);
+  b = serilizeString(b, packet.type.to_string(), 2);
+}
+
+unsigned char* SimpleHeader::serilizeChar(unsigned char* b) {
+  std::cout << packet.data << std::endl;
+  for(int i = 0; i < packet.length.to_ulong(); ++i) {
+    b[i] = packet.data[i];
+  }
+
+  return b + packet.length.to_ulong();
+}
+
+unsigned char* SimpleHeader::serilizeString(unsigned char* b, std::string s, int i) {
+  for (int j = 0; j < i; ++j)
+  {
+    b[j] = s[j];
+  }
+  return b + i;
+}
+
 std::bitset<128> SimpleHeader::getHeader() {
   std::bitset<128> temp;
   int count = 0;
@@ -89,17 +118,22 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
       }
   }
 
-  void SimpleHeader::setType(unsigned int type) {
-    if (type != 0 ) packet.type.reset();
+  void SimpleHeader::setType(unsigned int t) {
+    if (t != 0) {
+      packet.type.reset();
+    }
 
-    switch (type) {
+    switch (t) {
       case 1:
         packet.type.set(0); //sets rightmost bit to 1
+        break;
       case 2:
         packet.type.set(1); //sets second from right to 1
+        break;
       case 3:
         packet.type.set(0);
         packet.type.set(1);
+        break;
     }
   }
 

@@ -27,6 +27,9 @@ class SimpleHeader {
 private:
   struct simplepacket packet;
 
+  unsigned char* serilizeChar(unsigned char* b);
+  unsigned char* serilizeString(unsigned char* b, std::string s, int i);
+
 public:
   // default constructor initializes the header to zero.
   SimpleHeader();
@@ -36,6 +39,8 @@ public:
 
   void buildHeader(unsigned int length, unsigned int sequence,
     unsigned int type, unsigned int window);
+
+  void serilizePacket(unsigned char* b);
 
   //getters to return values as int for each header field
   unsigned int getType();
@@ -79,6 +84,7 @@ public:
     for (int i = 0; i < msg.length(); ++i) {
       packet.data[i] = msg[i];
     }
+    setLength(msg.length());
   }
 
   void setPaylodFile(std::string file) {
@@ -90,6 +96,7 @@ public:
       packet.data[i] = c;
       ++i;
     }
+    setLength(i);
   }
 
   void* thePayload() {
