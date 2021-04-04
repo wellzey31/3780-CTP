@@ -84,11 +84,14 @@ public:
     return packet;
   }
 
-  void setPaylod(std::string msg) {
-    for (int i = 0; i < msg.length() && i < DATA_SZ; ++i) {
+  std::string setPaylod(std::string msg) {
+    int i;
+    for (i = 0; i < msg.length() && i < DATA_SZ; ++i) {
       packet.data[i] = msg[i];
     }
-    setLength(msg.length());
+    setLength(i);
+
+    return msg.erase(0, packet.length.to_ulong());
   }
 
   void* thePayload() {
