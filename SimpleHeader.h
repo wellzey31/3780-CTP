@@ -7,7 +7,7 @@
 #include <iterator>
 #include <vector>
 #include <string>
-#define DATA_SZ 256
+#define DATA_SZ 512
 
 struct simplepacket {
   std::bitset<2> type;
