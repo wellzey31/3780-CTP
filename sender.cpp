@@ -81,10 +81,10 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
-  unsigned char buffer[384];
+  unsigned char buffer[4224];
   header -> serializePacket(buffer);
 
-  send(s, buffer, 512, 0);
+  send(s, buffer, 4224, 0);
   std::cout << "Message sent." << std::endl;
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
