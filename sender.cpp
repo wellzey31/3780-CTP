@@ -101,7 +101,6 @@ int main(int argc, char const *argv[]) {
 
     send(s, buffer, 640, 0);
     std::cout << "Packet Sent." << std::endl;
-
     ++seqnum;
   }
 
