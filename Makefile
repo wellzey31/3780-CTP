@@ -23,7 +23,7 @@ sender: $(OBJS) sender.cpp
 
 .PHONY: clean
 clean:
-		rm -f *.o $(BINARIES) *~ *.d
+		rm -f *.o $(BINARIES) testSH *~ *.d
 
 ## include the generate dependency files
 -include $(addsuffix .d, $(basename $(OBJS)))
