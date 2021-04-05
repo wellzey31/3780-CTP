@@ -71,6 +71,7 @@ int main(int argc, char const *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+  std::ofstream input(file, std::ios::binary);
   std::string eop = "end of packet.\n";
   std::string msg = "";
   while (true) {
@@ -82,18 +83,14 @@ int main(int argc, char const *argv[]) {
       break;
     }
 
-    std::cout << read -> thePacket().data;
-    msg = msg + read -> thePacket().data;
+    if (argv1.compare("-f") == 0) {
+      input << read -> thePacket().data;
+    } else {
+      printf("%s\n", read -> thePacket().data);
+    }
   }
 
-  if (argv1.compare("-f") == 0) {
-    std::ofstream input(file, std::ios::binary);
-    input << msg;
-    input.close();
-  } else {
-    printf("%s\n", msg);
-  }
-
+  input.close();
     send(new_socket , message , strlen(message) , 0 );
     printf("Mensaje de servidor enviado\n");
 
