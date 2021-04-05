@@ -70,7 +70,7 @@ int main(int argc, char const *argv[]) {
         std::cerr << "accept" << std::endl;
         exit(EXIT_FAILURE);
     }
-
+  std::string eop = "end of packet.\n";
   std::string msg = "";
   while (true) {
     valread = read(new_socket, buffer, 640);
@@ -82,6 +82,7 @@ int main(int argc, char const *argv[]) {
     }
 
     msg = msg + read -> thePacket().data;
+    msg = msg + eop;
   }
 
   if (argv1.compare("-f") == 0) {
