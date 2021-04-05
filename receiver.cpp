@@ -84,9 +84,9 @@ int main(int argc, char const *argv[]) {
     }
 
     if (argv1.compare("-f") == 0) {
-      input << read -> thePacket().data;
+      input << read -> thePayload();
     } else {
-      printf("%s\n", read -> thePacket().data);
+      printf("%s\n", read -> thePayload());
     }
   }
 

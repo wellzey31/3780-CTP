@@ -94,7 +94,7 @@ public:
     return msg.erase(0, packet.length.to_ulong());
   }
 
-  void* thePayload() {
+  std::string thePayload() {
     return packet.data;
   }
 };
