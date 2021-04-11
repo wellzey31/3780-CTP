@@ -8,7 +8,7 @@ SimpleHeader::SimpleHeader() {
   packet.window.reset();
   packet.seqnum.reset();
   packet.length.reset();
-  packet.timestamp.reset();
+  //packet.timestamp.reset();
   packet.crc1.reset();
   packet.crc2.reset();
 }
@@ -19,7 +19,7 @@ void SimpleHeader::serializePacket(unsigned char* b) {
   b = serializeString(b, packet.window.to_string(), 5);
   b = serializeString(b, packet.seqnum.to_string(), 8);
   b = serializeString(b, packet.length.to_string(), 16);
-  b = serializeString(b, packet.timestamp.to_string(), 32);
+  //b = serializeString(b, packet.timestamp.to_string(), 32);
   b = serializeString(b, packet.crc1.to_string(), 32);
   b = serializeChar(b);
   b = serializeString(b, packet.crc2.to_string(), 32);
@@ -48,7 +48,7 @@ void SimpleHeader::deserializePacket(unsigned char* b) {
   deserializeBitset(i, 5, b, packet.window);
   deserializeBitset(i, 8, b, packet.seqnum);
   deserializeBitset(i, 16, b, packet.length);
-  deserializeBitset(i, 32, b, packet.timestamp);
+  //deserializeBitset(i, 32, b, packet.timestamp);
   deserializeBitset(i, 32, b, packet.crc1);
   deserializeString(i, packet.length.to_ulong(), b);
   deserializeBitset(i, 32, b, packet.crc2);
@@ -113,12 +113,12 @@ std::bitset<128> SimpleHeader::getHeader() {
     count++;
   }
   //add timestamp bits to header
-  for (int i = 0; i < 32; i++) {
+  /*for (int i = 0; i < 32; i++) {
     if (packet.timestamp[i] == 1) {
       temp.set(count);
     }
     count++;
-  }
+  }*/
   //add crc1 bits to header
   for (int i = 0; i < 32; i++) {
     if (packet.crc1[i] == 1) {
@@ -233,9 +233,9 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     }*/
     auto thetime = std::chrono::system_clock::now();
     packet.timestamp = std::chrono::system_clock::to_time_t(thetime);
-    cout << packet.timestamp << std::endl;
-    long int t = static_cast<long int> (packet.timestamp(NULL));
-    std::cout << t << std::endl;
+    std::cout << packet.timestamp << std::endl;
+    //long int t = static_cast<long int> (packet.timestamp(NULL));
+    //std::cout << t << std::endl;
   }
 
   void SimpleHeader::setCRC1(unsigned int num) {
@@ -273,9 +273,9 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   unsigned int SimpleHeader::getLength() {
     return (unsigned int) packet.length.to_ulong();
   }
-  unsigned int SimpleHeader::getTimestamp() {
+  /*unsigned int SimpleHeader::getTimestamp() {
     return (unsigned int) packet.timestamp.to_ulong();
-  }
+  }*/
   unsigned int SimpleHeader::getCRC1() {
     return (unsigned int) packet.crc1.to_ulong();
   }
