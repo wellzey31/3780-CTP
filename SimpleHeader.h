@@ -86,7 +86,7 @@ public:
   }
 
   std::string setPaylod(std::string msg) {
-    int i;
+  int i;
   for (int j = 0; j < DATA_SZ; ++j) {
     packet.data[j] = 0;
   }
@@ -94,9 +94,9 @@ public:
     for (i = 0; i < msg.length() && i < DATA_SZ; ++i) {
       packet.data[i] = msg[i];
     }
-
     msg.erase(0, i);
     setLength(i);
+
     return msg;
   }
 

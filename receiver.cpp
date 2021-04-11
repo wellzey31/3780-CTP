@@ -90,13 +90,13 @@ int main(int argc, char const *argv[]) {
       printf("%s\n", read -> thePayload());
     }
 
-    ack -> setType(2);
+    /*ack -> setType(2);
     ack -> setWindow(read -> thePacket().window.to_ulong());
     ack -> setSeqNum(read -> thePacket().seqnum.to_ulong());
     ack -> setTimestamp(0);
     ack -> setCRC1(0);
     ack -> setCRC2(0);
-    send(s, ack, 640, 0);
+    send(s, ack, 640, 0);*/
   }
 
   input.close();

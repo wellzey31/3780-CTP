@@ -116,15 +116,16 @@ int main(int argc, char const *argv[]) {
 
   SimpleHeader* header = new SimpleHeader();
   header -> setWindow(1);
-  temp = msg;
-  while (temp.compare("") != 0) {
+
+  while (msg.compare("") != 0) {
     header -> setType(1);
     header -> setSeqNum(seqnum);
     header -> setTimestamp(0);
     header -> setCRC1(0);
     header -> setCRC2(0);
 
-    temp = "" + header -> setPaylod(temp);
+    msg = header -> setPaylod(msg);
+    std::cout << msg << "END" << std::endl;
     unsigned char buffer[640] = {};
     header -> serializePacket(buffer);
 
@@ -138,17 +139,16 @@ int main(int argc, char const *argv[]) {
   header -> setCRC1(0);
   header -> setCRC2(0);
 
-  msg = header -> setPaylod(" ");
+  msg = header -> setPaylod("");
   unsigned char buffer[640];
   header -> serializePacket(buffer);
   send(s, buffer, 640, 0);
 
-  send(s, buffer, 640, 0);
-  if (windowAck[0] == true) {
+  /*if (windowAck[0] == true) {
     std::cout << "Works" << std::endl;
   } else {
     std::cout << "Not" << std::endl;
-  }
+  }*/
 
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
