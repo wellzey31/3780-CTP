@@ -7,6 +7,7 @@
 #include <iterator>
 #include <vector>
 #include <string>
+#include <iostream>
 #define DATA_SZ 512
 
 struct simplepacket {
@@ -86,12 +87,17 @@ public:
 
   std::string setPaylod(std::string msg) {
     int i;
+  for (int j = 0; j < DATA_SZ; ++j) {
+    packet.data[j] = 0;
+  }
+
     for (i = 0; i < msg.length() && i < DATA_SZ; ++i) {
       packet.data[i] = msg[i];
     }
-    setLength(i);
 
-    return msg.erase(0, packet.length.to_ulong());
+    msg.erase(0, i);
+    setLength(i);
+    return msg;
   }
 
   std::string thePayload() {

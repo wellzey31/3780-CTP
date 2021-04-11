@@ -78,6 +78,7 @@ int main(int argc, char const *argv[]) {
     valread = read(new_socket, buffer, 640);
 
     SimpleHeader* read = new SimpleHeader();
+    SimpleHeader* ack = new SimpleHeader();
     read -> deserializePacket(buffer);
     if (read -> getType() == 3) {
       break;
@@ -88,6 +89,14 @@ int main(int argc, char const *argv[]) {
     } else {
       printf("%s\n", read -> thePayload());
     }
+
+    ack -> setType(2);
+    ack -> setWindow(read -> thePacket().window.to_ulong());
+    ack -> setSeqNum(read -> thePacket().seqnum.to_ulong());
+    ack -> setTimestamp(0);
+    ack -> setCRC1(0);
+    ack -> setCRC2(0);
+    send(s, ack, 640, 0);
   }
 
   input.close();
