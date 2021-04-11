@@ -66,6 +66,10 @@ void SimpleHeader::deserializeBitset(int &i, int j, unsigned char* b, std::bitse
 }
 
 void SimpleHeader::deserializeString(int &i, int j, unsigned char* b) {
+  for (int l = 0; l < DATA_SZ; ++l) {
+    packet.data[l] = 0;
+  }
+
   int k = 0;
   while (k < j) {
     packet.data[k] = b[i];

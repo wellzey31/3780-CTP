@@ -9,6 +9,13 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <mutex>
+#include <thread>
+
+bool *windowAck;
+int s;
+
+std::mutex windowInfoMutex;
 
 std::string getFileMsg(std::string file) {
   std::ifstream input(file, std::ios::binary);
@@ -23,6 +30,23 @@ std::string getFileMsg(std::string file) {
   return s;
 }
 
+/*void listenAck() {
+  unsigned char ack[640];
+  int ackSize, ackSeqNum;
+  bool ackError, ackNeg;
+  SimpleHeader* ackHeader = new SimpleHeader();
+
+  while (true) {
+    ackSize = read(s, ack, 640);
+    ackHeader -> deserializePacket(ack);
+
+    std::cerr << ackHeader -> getType() << std::endl;
+    if (ackHeader -> getType() == 2) {
+      windowAck[ackSeqNum] = true;
+    }
+  }
+}*/
+
 int main(int argc, char const *argv[]) {
   int seqnum = 0;
 
@@ -31,14 +55,14 @@ int main(int argc, char const *argv[]) {
     std::cout << argv[i] << " ";
   }
 
-  int s, sread;
+  int sread;
 
   struct sockaddr_in sa;
   std::string host, port, file, argv1;
   short unsigned int p;
   char msgin[1024] = {0};
 
-  std::string msg;
+  std::string msg, temp;
 
   s = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -86,8 +110,13 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
+  //std::thread recvThread(&listenAck);
+  windowAck = new bool[10];
+  //recvThread.detach();
+
   SimpleHeader* header = new SimpleHeader();
   header -> setWindow(1);
+
   while (msg.compare("") != 0) {
     header -> setType(1);
     header -> setSeqNum(seqnum);
@@ -96,11 +125,11 @@ int main(int argc, char const *argv[]) {
     header -> setCRC2(0);
 
     msg = header -> setPaylod(msg);
-    unsigned char buffer[640];
+    std::cout << msg << "END" << std::endl;
+    unsigned char buffer[640] = {};
     header -> serializePacket(buffer);
 
     send(s, buffer, 640, 0);
-    std::cout << "Packet Sent." << std::endl;
     ++seqnum;
   }
 
@@ -114,6 +143,12 @@ int main(int argc, char const *argv[]) {
   unsigned char buffer[640];
   header -> serializePacket(buffer);
   send(s, buffer, 640, 0);
+
+  /*if (windowAck[0] == true) {
+    std::cout << "Works" << std::endl;
+  } else {
+    std::cout << "Not" << std::endl;
+  }*/
 
   sread = read(s, msgin, 1024);
   std::cout << msgin << std::endl;
