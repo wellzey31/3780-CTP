@@ -219,14 +219,19 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     }
   }
 
-  void SimpleHeader::setTimestamp(unsigned int num) {
-    std::bitset<32> temp(num);
-    packet.timestamp.reset();
-    for (int i = 0; i < 32; i++) {
+  void SimpleHeader::setTimestamp() {
+    //std::bitset<32> temp(num);
+    //packet.timestamp.reset();
+    /*for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
         packet.timestamp.set(i);
       }
-    }
+    }*/
+    auto thetime = std::chrono::system_clock::now();
+    packet.timestamp = std::chrono::system_clock::to_time_t(thetime);
+    cout << packet.timestamp << std::endl;
+    long int t = static_cast<long int> (packet.timestamp(NULL));
+    std::cout << t << std::endl;
   }
 
   void SimpleHeader::setCRC1(unsigned int num) {

@@ -7,6 +7,8 @@
 #include <iterator>
 #include <vector>
 #include <string>
+#include <chrono>
+#include <ctime>
 #define DATA_SZ 512
 
 struct simplepacket {
@@ -15,7 +17,7 @@ struct simplepacket {
   std::bitset<5> window;
   std::bitset<8> seqnum;
   std::bitset<16> length;
-  std::bitset<32> timestamp;
+  std::time_t timestamp;
   std::bitset<32> crc1;
   std::bitset<32> crc2;
   char data[DATA_SZ];
@@ -62,7 +64,7 @@ public:
   void setWindow(unsigned int w);
   void setSeqNum(unsigned int seqNum);
   void setLength(unsigned int l);
-  void setTimestamp(unsigned int num);
+  void setTimestamp();
   void setCRC1(unsigned int num);
   void setCRC2(unsigned int num);
 

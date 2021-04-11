@@ -91,7 +91,7 @@ int main(int argc, char const *argv[]) {
   while (msg.compare("") != 0) {
     header -> setType(1);
     header -> setSeqNum(seqnum);
-    header -> setTimestamp(0);
+    header -> setTimestamp();
     header -> setCRC1(0);
     header -> setCRC2(0);
 
@@ -106,7 +106,7 @@ int main(int argc, char const *argv[]) {
 
   header -> setType(3);
   header -> setSeqNum(seqnum);
-  header -> setTimestamp(0);
+  header -> setTimestamp();
   header -> setCRC1(0);
   header -> setCRC2(0);
 
