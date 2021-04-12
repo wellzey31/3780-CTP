@@ -121,7 +121,7 @@ int main(int argc, char const *argv[]) {
     header -> setType(1);
     header -> setSeqNum(seqnum);
     header -> setTimestamp();
-    header -> setCRC1(0);
+    header -> setCRC1();
     header -> setCRC2(0);
 
     msg = header -> setPaylod(msg);
@@ -136,7 +136,7 @@ int main(int argc, char const *argv[]) {
   header -> setType(3);
   header -> setSeqNum(seqnum);
   header -> setTimestamp();
-  header -> setCRC1(0);
+  header -> setCRC1();
   header -> setCRC2(0);
 
   msg = header -> setPaylod("");

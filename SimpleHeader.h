@@ -67,7 +67,7 @@ public:
   void setSeqNum(unsigned int seqNum);
   void setLength(unsigned int l);
   void setTimestamp();
-  void setCRC1(unsigned int num);
+  void setCRC1();
   void setCRC2(unsigned int num);
 
 
