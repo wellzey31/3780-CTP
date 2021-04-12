@@ -28,6 +28,7 @@ void send_ack(SimpleHeader* read) {
   unsigned char buffer[640];
   ack -> serializePacket(buffer);
   send(s, buffer, 640, 0);
+  std::cout << "Ack sent!" << std::endl;
 }
 
 int main(int argc, char const *argv[]) {
