@@ -12,7 +12,7 @@
 #include <mutex>
 #include <thread>
 
-bool *windowAck;
+bool windowAck;
 int s;
 
 std::mutex windowInfoMutex;
@@ -30,22 +30,36 @@ std::string getFileMsg(std::string file) {
   return s;
 }
 
-/*void listenAck() {
+void listenAck() {
+  struct timeval tv;
+  tv.tv_sec = 10;
+  tv.tv_usec = 0;
+  setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
+
   unsigned char ack[640];
   int ackSize, ackSeqNum;
   bool ackError, ackNeg;
   SimpleHeader* ackHeader = new SimpleHeader();
+  std::cout << "Hi ";
 
+  int rs;
   while (true) {
-    ackSize = read(s, ack, 640);
-    ackHeader -> deserializePacket(ack);
-
-    std::cerr << ackHeader -> getType() << std::endl;
-    if (ackHeader -> getType() == 2) {
-      windowAck[ackSeqNum] = true;
+    rs = recv(s, ack, 640, 0);
+    std::cout << rs << std::endl;
+    if (rs <= 0) {
+      break;
+    }
+    else {
+      ackHeader -> deserializePacket(ack);
+      std::cerr << ackHeader -> getType() << " " << ackHeader -> getSeqNum() << std::endl;
+      if (ackHeader -> getType() == 2) {
+        windowAck = true;
+      }
+      rs = 0;
     }
   }
-}*/
+  delete ackHeader;
+}
 
 int main(int argc, char const *argv[]) {
   int seqnum = 0;
@@ -110,26 +124,32 @@ int main(int argc, char const *argv[]) {
     exit(1);
   }
 
-  //std::thread recvThread(&listenAck);
-  windowAck = new bool[10];
-  //recvThread.detach();
+  std::thread recvThread(&listenAck);
 
   SimpleHeader* header = new SimpleHeader();
-  header -> setWindow(1);
+
+  int windowSize = 1;
+  header -> setWindow(windowSize);
 
   while (msg.compare("") != 0) {
-    header -> setType(1);
-    header -> setSeqNum(seqnum);
-    header -> setTimestamp();
-    header -> setCRC1();
-    header -> setCRC2(0);
-
-    msg = header -> setPaylod(msg);
     unsigned char buffer[640] = {};
-    header -> serializePacket(buffer);
+    for (int i = 0; i < windowSize; ++i) {
+      header -> setType(1);
+      header -> setSeqNum(seqnum);
+      header -> setTimestamp();
+      header -> setCRC1();
+      header -> setCRC2(0);
 
-    send(s, buffer, 640, 0);
-    ++seqnum;
+      msg = header -> setPaylod(msg);
+      header -> serializePacket(buffer);
+
+      send(s, buffer, 640, 0);
+      ++seqnum;
+    }
+
+    if (recvThread.joinable()) {
+      recvThread.join();
+    }
   }
 
   header -> setType(3);
