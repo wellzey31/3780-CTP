@@ -12,7 +12,6 @@
 #include "SimpleHeader.h"
 
 void send_ack(SimpleHeader* read, int s) {
-  char data[DATA_SZ];
   int packetSz, dataSz;
   int seqnumRecvd;
   bool packetErr;
@@ -112,7 +111,7 @@ int main(int argc, char const *argv[]) {
       printf("%s\n", read -> thePayload());
     }
 
-    //send_ack(read, s);
+    send_ack(read, new_socket);
     /*ack -> setType(2);
     ack -> setWindow(read -> thePacket().window.to_ulong());
     ack -> setSeqNum(read -> thePacket().seqnum.to_ulong());
