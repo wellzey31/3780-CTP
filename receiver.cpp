@@ -11,9 +11,8 @@
 
 #include "SimpleHeader.h"
 
-void send_ack(SimpleHeader* read) {
+void send_ack(SimpleHeader* read, int s) {
   char data[DATA_SZ];
-  char ack[ACK_SZ];
   int packetSz, dataSz;
   int seqnumRecvd;
   bool packetErr;
@@ -22,13 +21,13 @@ void send_ack(SimpleHeader* read) {
   ack -> setType(2);
   ack -> setWindow(read -> thePacket().window.to_ulong());
   ack -> setSeqNum(read -> thePacket().seqnum.to_ulong());
-  ack -> setTimestamp(0);
+  ack -> setTimestamp();
   ack -> setCRC1();
   ack -> setCRC2(0);
   unsigned char buffer[640];
   ack -> serializePacket(buffer);
   send(s, buffer, 640, 0);
-  std::cout << "Ack sent!" << std::endl;
+  std::cerr << "Ack Sent\n";
 }
 
 int main(int argc, char const *argv[]) {
@@ -100,6 +99,9 @@ int main(int argc, char const *argv[]) {
     SimpleHeader* read = new SimpleHeader();
     SimpleHeader* ack = new SimpleHeader();
     read -> deserializePacket(buffer);
+
+    //send_ack(read, s);
+
     if (read -> getType() == 3) {
       break;
     }
@@ -110,7 +112,7 @@ int main(int argc, char const *argv[]) {
       printf("%s\n", read -> thePayload());
     }
 
-    send_ack(read);
+    //send_ack(read, s);
     /*ack -> setType(2);
     ack -> setWindow(read -> thePacket().window.to_ulong());
     ack -> setSeqNum(read -> thePacket().seqnum.to_ulong());
