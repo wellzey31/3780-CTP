@@ -1,17 +1,14 @@
-#include "SimpleHeader.h"
+//#include "SimpleHeader.h"
+#include <boost\crc.hpp>
+#include <string>
 #include <iostream>
-#include <bitset>
-#include <fstream>
-#include <iterator>
-#include <algorithm>
 
 int main()
 {
-    std::ifstream input( "myText.txt", std::ios::binary );
-    std::ofstream output( "output.txt", std::ios::binary );
+    std::string str( "The quick brown fox jumps over the lazy dog" );
+    boost::crc_32_type  crc;
+    crc.process_bytes( str.data(), str.size() );
 
-    std::copy(
-        std::istreambuf_iterator<char>(input),
-        std::istreambuf_iterator<char>( ),
-        std::ostreambuf_iterator<char>(output));
+    std::cout << "Checksum: " << std::hex << crc.checksum() << std::endl;
+    return 0;
 }
