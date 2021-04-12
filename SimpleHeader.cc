@@ -1,6 +1,7 @@
 #include "SimpleHeader.h"
 #include <bitset>
 #include <iostream>
+#include <boost/crc.hpp>
 
 SimpleHeader::SimpleHeader() {
   packet.type.reset();
@@ -239,7 +240,6 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   }
 
   void SimpleHeader::setCRC1() {
-    std::bitset<32> temp(num);
     packet.crc1.reset();
     boost::crc_32_type  crc;
     crc.process_bytes( packet.data, DATA_SZ);
