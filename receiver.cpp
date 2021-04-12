@@ -17,7 +17,14 @@ void send_ack(SimpleHeader* read, int s) {
   bool packetErr;
   SimpleHeader* ack = new SimpleHeader();
 
-  ack -> setType(2);
+  std::bitset<32> readCRC(read->to_string<char,std::string::traits_type,std::string::allocator_type>());
+  read->setCRC1();
+  if (read->thePacket().crc1 == readCRC) {
+    ack -> setType(2);
+  } else {
+    ack -> setType(3);
+  }
+
   ack -> setWindow(read -> thePacket().window.to_ulong());
   ack -> setSeqNum(read -> thePacket().seqnum.to_ulong());
   ack -> setTimestamp();
