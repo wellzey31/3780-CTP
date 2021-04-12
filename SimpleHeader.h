@@ -12,6 +12,7 @@
 #include <iostream>
 
 #define DATA_SZ 512
+#define ACK_SZ 6
 
 struct simplepacket {
   std::bitset<2> type;
