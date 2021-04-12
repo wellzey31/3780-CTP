@@ -58,9 +58,11 @@ TEST_F(HeaderTest, setHeader) {
   ASSERT_TRUE(h_->thePacket().timestamp == b6);
 
   //test crc1
-  h_->setCRC1(3); //set to 3
-  ASSERT_TRUE(h_->getCRC1() == 3);
-  ASSERT_TRUE(h_->thePacket().crc1 == b6);
+  h1_ = new SimpleHeader;
+  h_->setCRC1();
+  h1_->setCRC1();
+  ASSERT_TRUE(h_->getCRC1() == h1_->getCRC1());
+  //ASSERT_TRUE(h_->thePacket().crc1 == );
 
   //test crc2
   h_->setCRC2(3); //set to 3
