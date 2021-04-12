@@ -32,7 +32,7 @@ std::string getFileMsg(std::string file) {
 
 void listenAck() {
   struct timeval tv;
-  tv.tv_sec = 10;
+  tv.tv_sec = 1;
   tv.tv_usec = 0;
   setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
 
