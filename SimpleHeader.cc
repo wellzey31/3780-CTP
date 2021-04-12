@@ -234,7 +234,6 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     }*/
     auto thetime = std::chrono::system_clock::now();
     packet.timestamp = std::chrono::system_clock::to_time_t(thetime);
-    std::cout << packet.timestamp << std::endl;
     //long int t = static_cast<long int> (packet.timestamp(NULL));
     //std::cout << t << std::endl;
   }

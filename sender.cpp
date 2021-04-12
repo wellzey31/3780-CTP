@@ -125,7 +125,6 @@ int main(int argc, char const *argv[]) {
     header -> setCRC2(0);
 
     msg = header -> setPaylod(msg);
-    std::cout << msg << "END" << std::endl;
     unsigned char buffer[640] = {};
     header -> serializePacket(buffer);
 
