@@ -17,7 +17,7 @@ void send_ack(SimpleHeader* read, int s) {
   bool packetErr;
   SimpleHeader* ack = new SimpleHeader();
 
-  std::bitset<32> readCRC(read->to_string<char,std::string::traits_type,std::string::allocator_type>());
+  std::bitset<32> readCRC(read->getCRC1());
   read->setCRC1();
   if (read->thePacket().crc1 == readCRC) {
     ack -> setType(2);
