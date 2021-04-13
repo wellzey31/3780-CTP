@@ -40,18 +40,15 @@ void listenAck() {
   int ackSize, ackSeqNum;
   bool ackError, ackNeg;
   SimpleHeader* ackHeader = new SimpleHeader();
-  std::cout << "Hi ";
 
   int rs;
   while (true) {
     rs = recv(s, ack, 640, 0);
-    std::cout << rs << std::endl;
     if (rs <= 0) {
       break;
     }
     else {
       ackHeader -> deserializePacket(ack);
-      std::cerr << ackHeader -> getType() << " " << ackHeader -> getSeqNum() << std::endl;
       if (ackHeader -> getType() == 2) {
         windowAck = true;
       }
@@ -146,7 +143,7 @@ int main(int argc, char const *argv[]) {
       send(s, buffer, 640, 0);
       ++seqnum;
     }
-
+    //std::cout << "Packet sent." << std::endl;
     if (recvThread.joinable()) {
       recvThread.join();
     }
