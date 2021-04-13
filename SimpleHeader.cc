@@ -225,22 +225,15 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   }
 
   void SimpleHeader::setTimestamp() {
-    packet.timestamp.reset();
+    //packet.timestamp.reset();
     /*for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
         packet.timestamp.set(i);
       }
     }*/
     auto thetime = std::chrono::system_clock::now();
-    packet.timestamp = std::chrono::system_clock::to_time_t(thetime);
-    unsigned long long = num;
-    num = static_cast<unsigned long long> (thetime(NULL));
-    std::bitset<32> temp(num);
-    for (int i = 0; i < 32; i++) {
-      if (temp[i] == 1) {
-        packet.timestamp.set(i);
-      }
-    }
+    time_t mytime = std::chrono::system_clock::to_time_t(thetime);
+    packet.timestamp = mytime;
   }
 
   void SimpleHeader::setCRC1() {
