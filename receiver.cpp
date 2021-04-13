@@ -41,6 +41,12 @@ void send_ack(SimpleHeader* read, int s) {
 }
 
 int main(int argc, char const *argv[]) {
+  using std::chrono::high_resolution_clock;
+  using std::chrono::duration_cast;
+  using std::chrono::duration;
+  using std::chrono::milliseconds;
+  auto t1 = high_resolution_clock::now();
+
   int s, new_socket, valread;
 
   struct sockaddr_in sa;
@@ -134,8 +140,13 @@ int main(int argc, char const *argv[]) {
 
   input.close();
   char *message = "Hola este es el servidor";
-    send(new_socket , message , strlen(message) , 0 );
-    printf("Mensaje de servidor enviado\n");
-
+  send(new_socket , message , strlen(message) , 0 );
+  printf("Mensaje de servidor enviado\n");
+  
+  auto t2 = high_resolution_clock::now();
+  auto ms_int = duration_cast<milliseconds>(t2 - t1);
+  duration<double, std::milli> ms_double = t2 - t1;
+  std::cout << ms_int.count() << "ms\n";
+  std::cout << ms_double.count() << "ms";
  return 0;
 }
