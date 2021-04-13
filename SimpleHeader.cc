@@ -13,6 +13,17 @@ SimpleHeader::SimpleHeader() {
   packet.crc2.reset();
 }
 
+void SimpleHeader::reset() {
+  packet.type.reset();
+  packet.tr.reset();
+  packet.window.reset();
+  packet.seqnum.reset();
+  packet.length.reset();
+  //packet.timestamp.reset();
+  packet.crc1.reset();
+  packet.crc2.reset();
+}
+
 void SimpleHeader::serializePacket(unsigned char* b) {
   b = serializeString(b, packet.type.to_string(), 2);
   b = serializeString(b, packet.tr.to_string(), 1);
