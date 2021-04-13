@@ -242,9 +242,10 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     packet.crc1.reset();
     boost::crc_32_type  crc;
     crc.process_bytes( packet.data, DATA_SZ);
-    long long myll;
+    unsigned long long myll;
     myll = crc.checksum();
     std::bitset<32> temp(myll);
+    std::cerr << temp << std::endl;
     for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
         packet.crc1.set(i);

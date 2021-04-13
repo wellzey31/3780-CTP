@@ -11,7 +11,7 @@
 
 #include "SimpleHeader.h"
 
-void send_ack(SimpleHeader* read, int s) {
+void send_ack(SimpleHeader* &read, int s) {
   int packetSz, dataSz;
   int seqnumRecvd;
   bool packetErr;
@@ -32,7 +32,8 @@ void send_ack(SimpleHeader* read, int s) {
   ack -> setCRC2(0);
   unsigned char buffer[640];
   ack -> serializePacket(buffer);
-  send(s, buffer, 640, 0);
+  std::cerr << buffer << std::endl;
+  std::cerr << send(s, buffer, 640, 0) << std::endl;
   std::cerr << "Ack Sent\n";
 }
 
@@ -44,7 +45,6 @@ int main(int argc, char const *argv[]) {
   int addrlen = sizeof(sa);
   unsigned char buffer[1024] = {0};
   std::string port, file, argv1;
-  char *message = "Hola este es el servidor";
 
   argv1 = argv[1];
 
@@ -129,6 +129,7 @@ int main(int argc, char const *argv[]) {
   }
 
   input.close();
+  char *message = "Hola este es el servidor";
     send(new_socket , message , strlen(message) , 0 );
     printf("Mensaje de servidor enviado\n");
 
