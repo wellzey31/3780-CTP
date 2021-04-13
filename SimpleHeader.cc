@@ -247,9 +247,9 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
     packet.crc1.reset();
     boost::crc_32_type  crc;
     crc.process_bytes( packet.data, DATA_SZ);
-    unsigned long long myll;
+    unsigned long myll;
     myll = crc.checksum();
-    //std::cerr << crc.checksum() << "<-.checksum() ll-> " << myll << std::endl;
+    std::cerr << crc.checksum() << "<-.checksum() ll-> " << myll << std::endl;
     std::bitset<32> temp(myll);
     //std::cerr << temp << std::endl;
     for (int i = 0; i < 32; i++) {
