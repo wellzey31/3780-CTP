@@ -59,6 +59,13 @@ void listenAck() {
 }
 
 int main(int argc, char const *argv[]) {
+
+  using std::chrono::high_resolution_clock;
+  using std::chrono::duration_cast;
+  using std::chrono::duration;
+  using std::chrono::milliseconds;
+  auto t1 = high_resolution_clock::now();
+
   int seqnum = 0;
 
   std::cout << argc << " ";
@@ -171,5 +178,12 @@ int main(int argc, char const *argv[]) {
   std::cout << msgin << std::endl;
 
   delete header;
+
+  auto t2 = high_resolution_clock::now();
+  auto ms_int = duration_cast<milliseconds>(t2 - t1);
+  duration<double, std::milli> ms_double = t2 - t1;
+  std::cout << ms_int.count() << "ms\n";
+  std::cout << ms_double.count() << "ms\n";
+
   return 0;
 }

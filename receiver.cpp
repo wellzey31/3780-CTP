@@ -35,7 +35,7 @@ void send_ack(SimpleHeader* read, int s) {
   ack -> setCRC2(0);
   unsigned char buffer[640];
   ack -> serializePacket(buffer);
-  std::cerr << buffer << std::endl;
+  //std::cerr << buffer << std::endl;
   std::cerr << send(s, buffer, 640, 0) << std::endl;
   std::cerr << "Ack Sent\n";
 }
@@ -142,7 +142,7 @@ int main(int argc, char const *argv[]) {
   char *message = "Hola este es el servidor";
   send(new_socket , message , strlen(message) , 0 );
   printf("Mensaje de servidor enviado\n");
-  
+
   auto t2 = high_resolution_clock::now();
   auto ms_int = duration_cast<milliseconds>(t2 - t1);
   duration<double, std::milli> ms_double = t2 - t1;
