@@ -154,9 +154,6 @@ int main(int argc, char const *argv[]) {
     }
     window.unlock();
     ++i;
-    for(int k = 0; k < packets.size(); ++k){
-      
-    }
   }
 
   if (recvThread.joinable()) {
