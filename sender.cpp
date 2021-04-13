@@ -149,7 +149,7 @@ int main(int argc, char const *argv[]) {
   if (recvThread.joinable()) {
     recvThread.join();
   }
-  
+
   header -> setType(3);
   header -> setSeqNum(seqnum);
   header -> setTimestamp();
