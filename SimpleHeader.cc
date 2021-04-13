@@ -41,18 +41,6 @@ unsigned char* SimpleHeader::serializeString(unsigned char* b, std::string s, in
 }
 
 unsigned char* SimpleHeader::serializeTimestamp(unsigned char* b, std::time_t time, int i) {
-  /*long int t = static_cast<long int> (time);
-  std::string s = "" + t;
-  int size = s.length() - 1;
-  std::cout << size << " " << s << std::endl;
-  for (int j = i - 1; j >= 0; --j) {
-    if (size == 0) {
-      b[j] = '0';
-    } else {
-      b[j] = s[size];
-      --size;
-    }
-  }*/
   for (int j = 0; j < i; ++j) {
     b[j] = '0';
   }
