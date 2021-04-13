@@ -102,27 +102,27 @@ int main(int argc, char const *argv[]) {
   std::ofstream input(file, std::ios::binary);
   std::string eop = "end of packet.\n";
   std::string msg = "";
-  SimpleHeader* read = new SimpleHeader();
+  SimpleHeader* readPacket = new SimpleHeader();
 
   while (true) {
     valread = read(new_socket, buffer, 640);
 
-    read -> deserializePacket(buffer);
+    readPacket -> deserializePacket(buffer);
 
     //send_ack(read, s);
 
-    if (read -> getType() == 3) {
+    if (readPacket -> getType() == 3) {
       break;
     }
 
     if (argv1.compare("-f") == 0) {
-      input << read -> thePayload();
+      input << readPacket -> thePayload();
     } else {
-      printf("%s\n", read -> thePayload());
+      printf("%s\n", readPacket -> thePayload());
     }
 
-    send_ack(read, new_socket);
-    read->reset();
+    send_ack(readPacket, new_socket);
+    readPacket->reset();
     /*ack -> setType(2);
     ack -> setWindow(read -> thePacket().window.to_ulong());
     ack -> setSeqNum(read -> thePacket().seqnum.to_ulong());
