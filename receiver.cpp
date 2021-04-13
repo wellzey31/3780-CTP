@@ -44,7 +44,6 @@ int main(int argc, char const *argv[]) {
   int addrlen = sizeof(sa);
   unsigned char buffer[1024] = {0};
   std::string port, file, argv1;
-  char *message = "Hola este es el servidor";
 
   argv1 = argv[1];
 
@@ -129,6 +128,7 @@ int main(int argc, char const *argv[]) {
   }
 
   input.close();
+  char *message = "Hola este es el servidor";
     send(new_socket , message , strlen(message) , 0 );
     printf("Mensaje de servidor enviado\n");
 
