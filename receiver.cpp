@@ -19,8 +19,8 @@ void send_ack(SimpleHeader* read, int s) {
 
   std::bitset<32> readCRC(read->thePacket().crc1.to_ulong());
   //read->setCRC1();
-  std::cerr << readCRC << std::endl;
-  std::cerr << read->thePacket().crc1 << std::endl;
+  //std::cerr << readCRC << std::endl;
+  //std::cerr << read->thePacket().crc1 << std::endl;
 
   if (read->thePacket().crc1 == readCRC) {
     ack -> setType(2);
