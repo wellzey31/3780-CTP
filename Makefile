@@ -19,7 +19,7 @@ server: $(OBJS) receiver.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) receiver.cpp
 
 sender: $(OBJS) sender.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) sender.cpp
+	$(CXX) $(CXXFLAGS) -pthread -o $@ $(OBJS) sender.cpp
 
 .PHONY: clean
 clean:
