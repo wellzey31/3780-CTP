@@ -11,7 +11,7 @@
 
 #include "SimpleHeader.h"
 
-void send_ack(SimpleHeader* &read, int s) {
+void send_ack(SimpleHeader* read, int s) {
   int packetSz, dataSz;
   int seqnumRecvd;
   bool packetErr;
