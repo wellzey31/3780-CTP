@@ -41,7 +41,7 @@ private:
 public:
   // default constructor initializes the header to zero.
   SimpleHeader();
-  reset();
+  void reset();
 
   // returns the header as 128 bit bitset object
   std::bitset<128> getHeader();
