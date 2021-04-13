@@ -11,6 +11,8 @@
 #include <ctime>
 #include <iostream>
 
+#include <boost/crc.hpp>
+
 #define DATA_SZ 512
 #define ACK_SZ 6
 
@@ -34,6 +36,7 @@ private:
 
   unsigned char* serializeChar(unsigned char* b);
   unsigned char* serializeString(unsigned char* b, std::string s, int i);
+  unsigned char* serializeTimestamp(unsigned char* b, std::time_t time, int i);
 
 public:
   // default constructor initializes the header to zero.

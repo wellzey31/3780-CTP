@@ -1,7 +1,6 @@
 #include "SimpleHeader.h"
 #include <bitset>
 #include <iostream>
-#include <boost/crc.hpp>
 
 SimpleHeader::SimpleHeader() {
   packet.type.reset();
@@ -20,7 +19,7 @@ void SimpleHeader::serializePacket(unsigned char* b) {
   b = serializeString(b, packet.window.to_string(), 5);
   b = serializeString(b, packet.seqnum.to_string(), 8);
   b = serializeString(b, packet.length.to_string(), 16);
-  //b = serializeString(b, packet.timestamp.to_string(), 32);
+  b = serializeTimestamp(b, packet.timestamp, 32);
   b = serializeString(b, packet.crc1.to_string(), 32);
   b = serializeChar(b);
   b = serializeString(b, packet.crc2.to_string(), 32);
@@ -35,10 +34,29 @@ unsigned char* SimpleHeader::serializeChar(unsigned char* b) {
 }
 
 unsigned char* SimpleHeader::serializeString(unsigned char* b, std::string s, int i) {
-  for (int j = 0; j < i; ++j)
-  {
+  for (int j = 0; j < i; ++j) {
     b[j] = s[j];
   }
+  return b + i;
+}
+
+unsigned char* SimpleHeader::serializeTimestamp(unsigned char* b, std::time_t time, int i) {
+  /*long int t = static_cast<long int> (time);
+  std::string s = "" + t;
+  int size = s.length() - 1;
+  std::cout << size << " " << s << std::endl;
+  for (int j = i - 1; j >= 0; --j) {
+    if (size == 0) {
+      b[j] = '0';
+    } else {
+      b[j] = s[size];
+      --size;
+    }
+  }*/
+  for (int j = 0; j < i; ++j) {
+    b[j] = '0';
+  }
+
   return b + i;
 }
 
@@ -50,6 +68,7 @@ void SimpleHeader::deserializePacket(unsigned char* b) {
   deserializeBitset(i, 8, b, packet.seqnum);
   deserializeBitset(i, 16, b, packet.length);
   //deserializeBitset(i, 32, b, packet.timestamp);
+  i += 32;
   deserializeBitset(i, 32, b, packet.crc1);
   deserializeString(i, packet.length.to_ulong(), b);
   deserializeBitset(i, 32, b, packet.crc2);
