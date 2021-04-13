@@ -147,6 +147,6 @@ int main(int argc, char const *argv[]) {
   auto ms_int = duration_cast<milliseconds>(t2 - t1);
   duration<double, std::milli> ms_double = t2 - t1;
   std::cout << ms_int.count() << "ms\n";
-  std::cout << ms_double.count() << "ms";
+  std::cout << ms_double.count() << "ms\n";
  return 0;
 }
