@@ -114,7 +114,7 @@ int main(int argc, char const *argv[]) {
     valread = read(new_socket, buffer, 640);
 
     readPacket -> deserializePacket(buffer);
-
+    std::cout << buffer << std::endl;
     //send_ack(read, s);
 
     if (readPacket -> getType() == 3) {

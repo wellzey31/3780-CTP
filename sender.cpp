@@ -12,10 +12,8 @@
 #include <mutex>
 #include <thread>
 
-bool windowAck;
+bool windowAck[10];
 int s;
-
-std::mutex windowInfoMutex;
 
 std::string getFileMsg(std::string file) {
   std::ifstream input(file, std::ios::binary);
@@ -37,8 +35,6 @@ void listenAck() {
   setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
 
   unsigned char ack[640];
-  int ackSize, ackSeqNum;
-  bool ackError, ackNeg;
   SimpleHeader* ackHeader = new SimpleHeader();
 
   int rs;
@@ -50,7 +46,7 @@ void listenAck() {
     else {
       ackHeader -> deserializePacket(ack);
       if (ackHeader -> getType() == 2) {
-        windowAck = true;
+        windowAck[ackHeader -> getSeqNum()] = true;
       }
       rs = 0;
     }
@@ -59,13 +55,6 @@ void listenAck() {
 }
 
 int main(int argc, char const *argv[]) {
-
-  using std::chrono::high_resolution_clock;
-  using std::chrono::duration_cast;
-  using std::chrono::duration;
-  using std::chrono::milliseconds;
-  auto t1 = high_resolution_clock::now();
-
   int seqnum = 0;
 
   std::cout << argc << " ";
@@ -130,34 +119,46 @@ int main(int argc, char const *argv[]) {
 
   std::thread recvThread(&listenAck);
 
-  SimpleHeader* header = new SimpleHeader();
-
   int windowSize = 1;
-  header -> setWindow(windowSize);
+
+  std::vector<SimpleHeader*> packets;
 
   while (msg.compare("") != 0) {
-    unsigned char buffer[640] = {};
-    for (int i = 0; i < windowSize; ++i) {
-      header -> setType(1);
-      header -> setSeqNum(seqnum);
-      header -> setTimestamp();
-      header -> setCRC1();
-      header -> setCRC2(0);
+    packets.push_back(new SimpleHeader);
 
-      msg = header -> setPaylod(msg);
-      header -> serializePacket(buffer);
+    packets[seqnum] -> setType(1);
+    packets[seqnum] -> setWindow(windowSize);
+    packets[seqnum] -> setSeqNum(seqnum);
+    packets[seqnum] -> setTimestamp();
+    packets[seqnum] -> setCRC1();
+    packets[seqnum] -> setCRC2(0);
 
-      send(s, buffer, 640, 0);
-      ++seqnum;
-    }
+    msg = packets[seqnum] -> setPaylod(msg);
+
+    ++seqnum;
     //std::cout << "Packet sent." << std::endl;
+  }
+
+  int i = 0;
+  while (i < packets.size()) {
+    int j = 0;
+    while (j < windowSize && j < (packets.size() - i)) {
+      unsigned char buffer[640] = {};
+      packets[j + i] -> serializePacket(buffer);
+      send(s, buffer, 640, 0);
+      ++j;
+    }
+    ++i;
+    std::cout << "window" << std::endl;
   }
 
   if (recvThread.joinable()) {
     recvThread.join();
   }
 
+  SimpleHeader* header = new SimpleHeader();
   header -> setType(3);
+  header -> setWindow(windowSize);
   header -> setSeqNum(seqnum);
   header -> setTimestamp();
   header -> setCRC1();
@@ -178,12 +179,5 @@ int main(int argc, char const *argv[]) {
   std::cout << msgin << std::endl;
 
   delete header;
-
-  auto t2 = high_resolution_clock::now();
-  auto ms_int = duration_cast<milliseconds>(t2 - t1);
-  duration<double, std::milli> ms_double = t2 - t1;
-  std::cout << ms_int.count() << "ms\n";
-  std::cout << ms_double.count() << "ms\n";
-
   return 0;
 }

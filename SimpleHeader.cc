@@ -30,7 +30,7 @@ void SimpleHeader::serializePacket(unsigned char* b) {
   b = serializeString(b, packet.window.to_string(), 5);
   b = serializeString(b, packet.seqnum.to_string(), 8);
   b = serializeString(b, packet.length.to_string(), 16);
-  b = serializeTimestamp(b, packet.timestamp, 32);
+  b = serializeTimestamp(b, 32);
   b = serializeString(b, packet.crc1.to_string(), 32);
   b = serializeChar(b);
   b = serializeString(b, packet.crc2.to_string(), 32);
@@ -51,7 +51,7 @@ unsigned char* SimpleHeader::serializeString(unsigned char* b, std::string s, in
   return b + i;
 }
 
-unsigned char* SimpleHeader::serializeTimestamp(unsigned char* b, std::time_t time, int i) {
+unsigned char* SimpleHeader::serializeTimestamp(unsigned char* b, int i) {
   for (int j = 0; j < i; ++j) {
     b[j] = '0';
   }

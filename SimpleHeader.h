@@ -36,7 +36,7 @@ private:
 
   unsigned char* serializeChar(unsigned char* b);
   unsigned char* serializeString(unsigned char* b, std::string s, int i);
-  unsigned char* serializeTimestamp(unsigned char* b, std::time_t time, int i);
+  unsigned char* serializeTimestamp(unsigned char* b, int i);
 
 public:
   // default constructor initializes the header to zero.
