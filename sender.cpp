@@ -144,11 +144,12 @@ int main(int argc, char const *argv[]) {
       ++seqnum;
     }
     //std::cout << "Packet sent." << std::endl;
-    if (recvThread.joinable()) {
-      recvThread.join();
-    }
   }
 
+  if (recvThread.joinable()) {
+    recvThread.join();
+  }
+  
   header -> setType(3);
   header -> setSeqNum(seqnum);
   header -> setTimestamp();
