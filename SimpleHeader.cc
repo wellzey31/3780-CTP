@@ -244,7 +244,6 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
   }
 
   void SimpleHeader::setTimestamp() {
-    //std::bitset<32> temp(num);
     //packet.timestamp.reset();
     /*for (int i = 0; i < 32; i++) {
       if (temp[i] == 1) {
@@ -252,9 +251,8 @@ void SimpleHeader::buildHeader(unsigned int length, unsigned int sequence,
       }
     }*/
     auto thetime = std::chrono::system_clock::now();
-    packet.timestamp = std::chrono::system_clock::to_time_t(thetime);
-    //long int t = static_cast<long int> (packet.timestamp(NULL));
-    //std::cout << t << std::endl;
+    time_t mytime = std::chrono::system_clock::to_time_t(thetime);
+    packet.timestamp = mytime;
   }
 
   void SimpleHeader::setCRC1() {
