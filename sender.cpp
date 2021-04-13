@@ -13,6 +13,7 @@
 #include <thread>
 
 bool windowAck[10];
+std::mutex window;
 int s;
 
 std::string getFileMsg(std::string file) {
@@ -40,6 +41,7 @@ void listenAck() {
   int rs;
   while (true) {
     rs = recv(s, ack, 640, 0);
+    window.lock();
     if (rs <= 0) {
       break;
     }
@@ -50,6 +52,7 @@ void listenAck() {
       }
       rs = 0;
     }
+    window.unlock();
   }
   delete ackHeader;
 }
@@ -142,14 +145,18 @@ int main(int argc, char const *argv[]) {
   int i = 0;
   while (i < packets.size()) {
     int j = 0;
+    window.lock();
     while (j < windowSize && j < (packets.size() - i)) {
       unsigned char buffer[640] = {};
       packets[j + i] -> serializePacket(buffer);
       send(s, buffer, 640, 0);
       ++j;
     }
+    window.unlock();
     ++i;
-    std::cout << "window" << std::endl;
+    for(int k = 0; k < packets.size(); ++k){
+      
+    }
   }
 
   if (recvThread.joinable()) {
